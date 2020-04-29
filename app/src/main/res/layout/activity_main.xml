@@ -20,15 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:tabMode="fixed"
-        app:tabInlineLabel="true">
+        app:tabInlineLabel="true"
+        app:tabMode="fixed" />
 
-    </com.google.android.material.tabs.TabLayout>
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/chips_layout"/>
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/popular_text_view"

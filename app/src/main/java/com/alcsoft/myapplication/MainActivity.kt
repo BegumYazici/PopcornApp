@@ -9,13 +9,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val tabsText = resources.getStringArray(R.array.tabs)
-    private val tabsIcon: Array<Int> =
-        arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val tabsText: Array<String> = applicationContext.resources.getStringArray(R.array.tabs)
+        val tabsIcon: Array<Int> =
+            arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
 
         viewPager.adapter = MainPagerAdapter(this)
 
