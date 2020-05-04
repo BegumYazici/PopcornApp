@@ -16,31 +16,33 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val genreTypeNames = this.resources.getStringArray(R.array.genreTypes)
-        val genreTypeList = mutableListOf<String>()
+        addChips()
+        addTabsWithViewPager()
+    }
 
-        val typeNameSize = genreTypeNames.size -1
+    private fun addChips() {
+        val genreNames = this.resources.getStringArray(R.array.genreTypes)
+        val genreList = mutableListOf<String>()
 
-        for (j in 0..typeNameSize){
-            genreTypeList.add(genreTypeNames[j])
+        for (j in 0..genreNames.size.minus(1)) {
+            genreList.add(genreNames[j])
         }
 
-        val size = genreTypeList.size -1
-
-        for (i in 0..size){
-            val chip = Chip(this,null,R.attr.CustomChipChoiceStyle)
-            chip.text = genreTypeList[i]
+        for (i in 0..genreList.size.minus(1)) {
+            val chip = Chip(this, null, R.attr.CustomChipChoiceStyle)
+            chip.text = genreList[i]
             chip.isCheckable = true
             chip.isClickable = true
             chip.isFocusable = true
 
             chip.setOnClickListener {
-                Toast.makeText(this, genreTypeList[i] + " tiklandi.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, genreList[i] + " tiklandi.", Toast.LENGTH_SHORT).show()
             }
-
             chip_group.addView(chip)
         }
+    }
 
+    private fun addTabsWithViewPager() {
         val tabsText: Array<String> = applicationContext.resources.getStringArray(R.array.tabs)
         val tabsIcon: Array<Int> =
             arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
