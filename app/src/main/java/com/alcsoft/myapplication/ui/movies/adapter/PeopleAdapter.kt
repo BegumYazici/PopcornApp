@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.moviesRecyclerView
+package com.alcsoft.myapplication.ui.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
+import com.alcsoft.myapplication.ui.movies.model.PeopleModel
 
 class PeopleAdapter(private val peopleMovieList: List<PeopleModel>): RecyclerView.Adapter<PeopleAdapter.PeopleViewHolder>() {
 

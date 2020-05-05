@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.moviesRecyclerView
+package com.alcsoft.myapplication.ui.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
+import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 
-class MoviesAdapter(private val moviesList: List<MoviesModel>) :
+class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieClickListener: MovieListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +20,6 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>) :
         val peopleHeader = itemView.findViewById<TextView>(R.id.people_text_view)
         val peopleList = itemView.findViewById<RecyclerView>(R.id.recycler_view_people_info)
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -51,7 +51,7 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>) :
                 popularMoviesViewHolder.popularHeader.text = movieModel.textPopular
 
                 val movieList = movieModel.recyclerViewPopularMovies
-                val adapter = PopularMovieAdapter(movieList)
+                val adapter = PopularMovieAdapter(movieList, movieClickListener )
                 popularMoviesViewHolder.movieList.adapter = adapter
 
             }
