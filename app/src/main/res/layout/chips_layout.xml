@@ -9,11 +9,10 @@
         android:id="@+id/chip_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         app:chipSpacing="10dp"
         app:singleLine="true"
         app:singleSelection="true">
-
 
     </com.google.android.material.chip.ChipGroup>
 

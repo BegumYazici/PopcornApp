@@ -1,10 +1,10 @@
-package com.alcsoft.myapplication
+package com.alcsoft.myapplication.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.alcsoft.myapplication.ui.main.MainPagerAdapter
+import com.alcsoft.myapplication.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,14 +29,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         for (i in 0..genreList.size.minus(1)) {
-            val chip = Chip(this, null, R.attr.CustomChipChoiceStyle)
+            val chip = Chip(this, null,
+                R.attr.CustomChipChoiceStyle
+            )
             chip.text = genreList[i]
             chip.isCheckable = true
             chip.isClickable = true
             chip.isFocusable = true
 
             chip.setOnClickListener {
-                Toast.makeText(this, genreList[i] + " tiklandi.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, genreList[i] + " is clicked.", Toast.LENGTH_SHORT).show()
             }
             chip_group.addView(chip)
         }
@@ -45,7 +47,10 @@ class MainActivity : AppCompatActivity() {
     private fun addTabsWithViewPager() {
         val tabsText: Array<String> = applicationContext.resources.getStringArray(R.array.tabs)
         val tabsIcon: Array<Int> =
-            arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
+            arrayOf(
+                R.drawable.ic_movie_black_24dp,
+                R.drawable.ic_tv_black_24dp
+            )
 
         viewPager.adapter = MainPagerAdapter(this)
 
