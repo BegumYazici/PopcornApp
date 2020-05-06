@@ -1,28 +1,25 @@
 package com.alcsoft.myapplication.ui.movies.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.alcsoft.myapplication.R
+import com.alcsoft.myapplication.databinding.ItemPeopleBinding
 import com.alcsoft.myapplication.ui.movies.model.PeopleModel
 
-class PeopleAdapter(private val peopleMovieList: List<PeopleModel>): RecyclerView.Adapter<PeopleAdapter.PeopleViewHolder>() {
+class PeopleAdapter(private val peopleMovieList: List<PeopleModel>, private val peopleClickListener: PeopleListener) :
+    RecyclerView.Adapter<PeopleAdapter.PeopleViewHolder>() {
 
-    class PeopleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val peopleImage = itemView.findViewById<ImageView>(R.id.image_people)
-        val peopleName = itemView.findViewById<TextView>(R.id.people_name)
+    class PeopleViewHolder(private val peopleBinding: ItemPeopleBinding) : RecyclerView.ViewHolder(peopleBinding.root) {
+        fun bind(peopleModel: PeopleModel){
+            peopleBinding.people = peopleModel
+            peopleBinding.executePendingBindings()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
-        val peopleView = layoutInflater.inflate(R.layout.item_people,parent,false)
-
-        return PeopleViewHolder(peopleView)
+        val peopleBinding = ItemPeopleBinding.inflate(layoutInflater,parent,false)
+        return PeopleViewHolder(peopleBinding)
     }
 
     override fun getItemCount(): Int {
@@ -31,7 +28,10 @@ class PeopleAdapter(private val peopleMovieList: List<PeopleModel>): RecyclerVie
 
     override fun onBindViewHolder(holder: PeopleViewHolder, position: Int) {
         val peopleModel = peopleMovieList[position]
-        holder.peopleImage.setImageResource(R.drawable.people)
-        holder.peopleName.text = peopleModel.peopleName
+        holder.bind(peopleModel)
+
+        holder.itemView.setOnClickListener {
+            peopleClickListener.onPeopleItemClicked(peopleModel)
+        }
     }
 }

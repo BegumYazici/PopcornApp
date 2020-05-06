@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="5dp">
+<layout>
 
-    <ImageView
-        android:id="@+id/image_people"
-        android:layout_width="90dp"
-        android:layout_height="130dp"
-        android:src="@drawable/people" />
+    <data>
+        <variable
+            name="people"
+            type="com.alcsoft.myapplication.ui.movies.model.PeopleModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/people_name"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        tools:text="Grainne Keenan" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="5dp">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/image_people"
+            android:layout_width="90dp"
+            android:layout_height="130dp"
+            android:src="@drawable/people" />
+
+        <TextView
+            android:id="@+id/people_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            tools:text="Grainne Keenan"
+            android:text="@{people.peopleName}"/>
+
+    </LinearLayout>
+</layout>

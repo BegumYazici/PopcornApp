@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.ui.movies.adapter.MovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.MoviesAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.PeopleListener
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PeopleModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
@@ -28,9 +29,13 @@ class MoviesFragment : Fragment() {
 
         val movieList = getDummyMovieList()
 
-        val moviesAdapter = MoviesAdapter(movieList,object :MovieListener{
+        val moviesAdapter = MoviesAdapter(movieList, object : MovieListener {
             override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
-                Toast.makeText(context,"${popularMovieModel.movieName} is clicked.",Toast.LENGTH_SHORT).show() }
+                Toast.makeText(context, "${popularMovieModel.movieName} is clicked.", Toast.LENGTH_SHORT).show()
+            }
+        }, object : PeopleListener {
+            override fun onPeopleItemClicked(peopleModel: PeopleModel) {
+                Toast.makeText(context, "${peopleModel.peopleName} is clicked.", Toast.LENGTH_SHORT).show() }
         })
 
         moviesRecyclerView.adapter = moviesAdapter

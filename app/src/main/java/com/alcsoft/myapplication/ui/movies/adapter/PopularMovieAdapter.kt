@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.databinding.ItemMovieBinding
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 
-class PopularMovieAdapter(private val popularMovieList: List<PopularMovieModel>, val movieListener:MovieListener) :
+class PopularMovieAdapter(private val popularMovieList: List<PopularMovieModel>,private val movieListener: MovieListener) :
     RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {

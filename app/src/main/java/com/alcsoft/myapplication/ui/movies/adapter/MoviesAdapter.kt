@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 
-class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieClickListener: MovieListener) :
+class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieClickListener: MovieListener,
+                    private val peopleClickListener: PeopleListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,9 +45,7 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieC
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (val movieModel = moviesList[position]) {
-
             is MoviesModel.PopularMoviesModel -> {
-
                 val popularMoviesViewHolder = holder as PopularMoviesViewHolder
                 popularMoviesViewHolder.popularHeader.text = movieModel.textPopular
 
@@ -60,7 +59,7 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieC
                 peopleMoviesViewHolder.peopleHeader.text = movieModel.textPeople
 
                 val peopleList = movieModel.recyclerViewPeopleInfo
-                val peopleAdapter = PeopleAdapter(peopleList)
+                val peopleAdapter = PeopleAdapter(peopleList,peopleClickListener)
                 peopleMoviesViewHolder.peopleList.adapter = peopleAdapter
             }
         }
