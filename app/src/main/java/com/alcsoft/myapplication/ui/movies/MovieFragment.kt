@@ -54,7 +54,6 @@ class MovieFragment : Fragment() {
                         .show()
                 }
             })
-
             moviesRecyclerView.adapter = moviesAdapter
         })
 

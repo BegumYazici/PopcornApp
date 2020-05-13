@@ -42,6 +42,5 @@
             android:textSize="8sp"
             android:maxLines="1"
             tools:text="America" />
-
     </LinearLayout>
 </layout>
