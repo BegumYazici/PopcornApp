@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.movies.adapter
+package com.alcsoft.myapplication.ui.movies.adapter.people
 
 import com.alcsoft.myapplication.ui.movies.model.PeopleModel
 

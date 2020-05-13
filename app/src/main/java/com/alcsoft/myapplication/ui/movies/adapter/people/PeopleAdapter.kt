@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.movies.adapter
+package com.alcsoft.myapplication.ui.movies.adapter.people
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,7 +19,9 @@ class PeopleAdapter(private val peopleMovieList: List<PeopleModel>, private val 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val peopleBinding = ItemPeopleBinding.inflate(layoutInflater,parent,false)
-        return PeopleViewHolder(peopleBinding)
+        return PeopleViewHolder(
+            peopleBinding
+        )
     }
 
     override fun getItemCount(): Int {

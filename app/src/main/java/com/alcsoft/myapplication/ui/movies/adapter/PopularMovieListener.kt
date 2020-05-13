@@ -2,7 +2,7 @@ package com.alcsoft.myapplication.ui.movies.adapter
 
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 
-interface MovieListener {
+interface PopularMovieListener {
 
     fun onMovieItemClicked(popularMovieModel: PopularMovieModel)
 }

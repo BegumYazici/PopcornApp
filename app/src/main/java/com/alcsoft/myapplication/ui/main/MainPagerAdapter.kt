@@ -3,7 +3,7 @@ package com.alcsoft.myapplication.ui.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.alcsoft.myapplication.ui.movies.MoviesFragment
+import com.alcsoft.myapplication.ui.movies.MovieFragment
 import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -15,7 +15,7 @@ class MainPagerAdapter(fragmentActivity: FragmentActivity) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            POSITION_MOVIES -> MoviesFragment()
+            POSITION_MOVIES -> MovieFragment()
             POSITION_TV_SHOWS -> TvShowsFragment()
             else -> throw IllegalStateException("Undefined position $position. Max count is $TAB_COUNT")
         }

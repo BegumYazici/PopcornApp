@@ -9,11 +9,11 @@ data class PeopleModel(val peopleImage: Int = R.drawable.people, val peopleName:
 sealed class MoviesModel{
     data class PopularMoviesModel(
         val textPopular: String = "POPULAR",
-        val recyclerViewPopularMovies : List<PopularMovieModel>
+        val popularMoviesList : List<PopularMovieModel>
     ) : MoviesModel()
 
     data class PeopleInfoModel(
         val textPeople: String = "PEOPLE",
-        val recyclerViewPeopleInfo: List<PeopleModel>
+        val peopleInfoList: List<PeopleModel>
     ): MoviesModel()
 }

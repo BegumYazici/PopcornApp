@@ -9,7 +9,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="3.5"
+            android:rating="@{popularMovie.movieRating}"
             android:stepSize="0.1" />
 
         <TextView
@@ -36,9 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="12sp"
-            tools:text="America"
-            android:text="@{popularMovie.movieName}"/>
+            android:ellipsize="end"
+            android:text="@{popularMovie.movieName}"
+            android:textSize="8sp"
+            android:maxLines="1"
+            tools:text="America" />
 
     </LinearLayout>
 </layout>

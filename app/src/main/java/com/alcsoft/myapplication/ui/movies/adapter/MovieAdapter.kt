@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
+import com.alcsoft.myapplication.ui.movies.adapter.people.PeopleAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.people.PeopleListener
+import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieAdapter
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 
-class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieClickListener: MovieListener,
-                    private val peopleClickListener: PeopleListener) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieClickListener: PopularMovieListener,
+                   private val peopleClickListener: PeopleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val popularHeader = itemView.findViewById<TextView>(R.id.popular_text_view)
@@ -23,15 +25,12 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieC
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
         if (viewType == POPULAR_MOVIES) {
-            val popularMoviesView =
-                layoutInflater.inflate(R.layout.movies_single_line, parent, false)
+            val popularMoviesView=layoutInflater.inflate(R.layout.movies_single_line, parent, false)
             return PopularMoviesViewHolder(popularMoviesView)
         } else if (viewType == PEOPLE_MOVIES) {
-            val peopleMoviesView =
-                layoutInflater.inflate(R.layout.person_info_single_line, parent, false)
+            val peopleMoviesView=layoutInflater.inflate(R.layout.person_info_single_line, parent, false)
             return PeopleMoviesViewHolder(peopleMoviesView)
         } else {
             throw IllegalArgumentException("Unexpected view type")
@@ -43,14 +42,13 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieC
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         when (val movieModel = moviesList[position]) {
             is MoviesModel.PopularMoviesModel -> {
                 val popularMoviesViewHolder = holder as PopularMoviesViewHolder
                 popularMoviesViewHolder.popularHeader.text = movieModel.textPopular
 
-                val movieList = movieModel.recyclerViewPopularMovies
-                val adapter = PopularMovieAdapter(movieList, movieClickListener )
+                val movieList = movieModel.popularMoviesList
+                val adapter = PopularMovieAdapter(movieList, movieClickListener)
                 popularMoviesViewHolder.movieList.adapter = adapter
 
             }
@@ -58,8 +56,8 @@ class MoviesAdapter(private val moviesList: List<MoviesModel>,private val movieC
                 val peopleMoviesViewHolder = holder as PeopleMoviesViewHolder
                 peopleMoviesViewHolder.peopleHeader.text = movieModel.textPeople
 
-                val peopleList = movieModel.recyclerViewPeopleInfo
-                val peopleAdapter = PeopleAdapter(peopleList,peopleClickListener)
+                val peopleList = movieModel.peopleInfoList
+                val peopleAdapter = PeopleAdapter(peopleList, peopleClickListener)
                 peopleMoviesViewHolder.peopleList.adapter = peopleAdapter
             }
         }
