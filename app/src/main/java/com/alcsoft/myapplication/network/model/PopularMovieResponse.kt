@@ -3,6 +3,8 @@ package com.alcsoft.myapplication.network.model
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.squareup.moshi.Json
 
+private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
+
 data class PopularMovieResponse(
     val page: Int,
     val results: List<PopularMovieDetail>
@@ -33,6 +35,7 @@ fun PopularMovieResponse.toPopularMovieModel(): List<PopularMovieModel> {
     for (item: PopularMovieDetail in results) {
         popularMovieList.add(
             PopularMovieModel(
+                movieImage = IMAGE_BASE_URL+ item.popularMovieImage,
                 movieRating = (item.popularMovieRating.toFloat())/2,
                 movieName = item.popularMovieName
             )

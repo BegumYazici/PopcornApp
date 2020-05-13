@@ -2,7 +2,7 @@ package com.alcsoft.myapplication.ui.movies.model
 
 import com.alcsoft.myapplication.R
 
-data class PopularMovieModel(val movieImage: Int = R.drawable.movie, val movieRating: Float, val movieName: String)
+data class PopularMovieModel(val movieImage: String, val movieRating: Float, val movieName: String)
 
 data class PeopleModel(val peopleImage: Int = R.drawable.people, val peopleName: String)
 

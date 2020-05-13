@@ -18,10 +18,10 @@
             android:id="@+id/popular_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:text="@string/popular"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_popular_movies"
@@ -29,6 +29,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/status_image"
+            android:layout_gravity="center"
+            app:popularMovieStatus="@{popularViewModel.status}"/>
 
     </LinearLayout>
 </layout>
