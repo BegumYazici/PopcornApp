@@ -2,9 +2,10 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="popularMovie"
-            type="com.alcsoft.myapplication.ui.movies.model.PopularMovieModel" />
+            name="upcomingMovie"
+            type="com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,31 +17,29 @@
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/image_movie"
+            android:id="@+id/image_people"
             android:layout_width="90dp"
             android:layout_height="130dp"
-            android:layout_marginTop="5dp"
-            app:imageUrl="@{popularMovie.movieImage}"/>
-
-        <RatingBar
-            android:id="@+id/movie_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="@{popularMovie.movieRating}"
-            android:stepSize="0.1" />
+            app:imageUrl="@{upcomingMovie.upcomingMovieImage}" />
 
         <TextView
-            android:id="@+id/movie_name"
+            android:id="@+id/upcoming_movie_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:text="@{popularMovie.movieName}"
+            android:text="@{upcomingMovie.upcomingMovieName}"
             android:textSize="10sp"
+            android:ellipsize="end"
             android:maxLines="1"
-            tools:text="America" />
+            tools:text="Grainne Keenan" />
+
+        <TextView
+            android:id="@+id/upcoming_movie_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{upcomingMovie.upcomingMovieDate}"
+            android:textSize="9sp"
+            tools:text="20.06.2020"
+            />
+
     </LinearLayout>
 </layout>

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.databinding.ItemMovieBinding
-import com.alcsoft.myapplication.ui.movies.adapter.PopularMovieListener
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 
 class PopularMovieAdapter(private val popularMovieList: List<PopularMovieModel>,
-                          private val movieListener: PopularMovieListener)
+                          private val movieListener: PopularMovieListener
+)
     : RecyclerView.Adapter<PopularMovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {

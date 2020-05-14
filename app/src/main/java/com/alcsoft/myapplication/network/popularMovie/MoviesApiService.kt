@@ -1,6 +1,6 @@
-package com.alcsoft.myapplication.network
+package com.alcsoft.myapplication.network.popularMovie
 
-import com.alcsoft.myapplication.network.model.PopularMovieResponse
+import com.alcsoft.myapplication.network.popularMovie.model.PopularMovieResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit

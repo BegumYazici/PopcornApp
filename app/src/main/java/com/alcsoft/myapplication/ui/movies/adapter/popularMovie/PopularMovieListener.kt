@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.movies.adapter
+package com.alcsoft.myapplication.ui.movies.adapter.popularMovie
 
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 

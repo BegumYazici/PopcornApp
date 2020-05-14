@@ -11,35 +11,46 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentMoviesBinding
-import com.alcsoft.myapplication.network.model.toPopularMovieModel
+import com.alcsoft.myapplication.network.popularMovie.model.toPopularMovieModel
+import com.alcsoft.myapplication.network.upcomingMovie.model.toUpcomingMovieModel
 import com.alcsoft.myapplication.ui.movies.adapter.MovieAdapter
-import com.alcsoft.myapplication.ui.movies.adapter.PopularMovieListener
-import com.alcsoft.myapplication.ui.movies.adapter.people.PeopleListener
+import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieViewModel
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieViewModel
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
-import com.alcsoft.myapplication.ui.movies.model.PeopleModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
+import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MovieFragment : Fragment() {
 
     private lateinit var movieBinding: FragmentMoviesBinding
     private lateinit var movieViewModel: PopularMovieViewModel
+    private lateinit var upcomingMovieViewModel: UpcomingMovieViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
             : View? {
 
         movieViewModel = ViewModelProvider(this).get(PopularMovieViewModel::class.java)
+        upcomingMovieViewModel = ViewModelProvider(this).get(UpcomingMovieViewModel::class.java)
+
         movieBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
         movieBinding.lifecycleOwner = viewLifecycleOwner
 
-        movieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
+        val moviesList = mutableListOf<MoviesModel>()
 
-            val moviesList = mutableListOf<MoviesModel>()
+        movieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
             val popularMovieList =it.toPopularMovieModel()
             moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+        })
 
-            val moviesAdapter = MovieAdapter(moviesList, object : PopularMovieListener {
+        upcomingMovieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
+            val upComingMovieList = it.toUpcomingMovieModel()
+            moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
+
+            val moviesAdapter = MovieAdapter(moviesList, object :
+                PopularMovieListener {
                 override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
                     Toast.makeText(
                         context,
@@ -48,12 +59,13 @@ class MovieFragment : Fragment() {
                     ).show()
                 }
             }, object :
-                PeopleListener {
-                override fun onPeopleItemClicked(peopleModel: PeopleModel) {
-                    Toast.makeText(context, "${peopleModel.peopleName} is clicked.", Toast.LENGTH_SHORT)
+                UpcomingMovieListener {
+                override fun onUpcomingMovieItemClicked(upcomingMovieModel: UpcomingMovieModel) {
+                    Toast.makeText(context, "${upcomingMovieModel.upcomingMovieName} is clicked.", Toast.LENGTH_SHORT)
                         .show()
                 }
             })
+
             moviesRecyclerView.adapter = moviesAdapter
         })
 

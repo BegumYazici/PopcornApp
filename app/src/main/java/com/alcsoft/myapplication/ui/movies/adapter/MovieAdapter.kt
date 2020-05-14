@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
-import com.alcsoft.myapplication.ui.movies.adapter.people.PeopleAdapter
-import com.alcsoft.myapplication.ui.movies.adapter.people.PeopleListener
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 
 class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieClickListener: PopularMovieListener,
-                   private val peopleClickListener: PeopleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                   private val peopleClickListener: UpcomingMovieListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val popularHeader = itemView.findViewById<TextView>(R.id.popular_text_view)
@@ -30,7 +31,7 @@ class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieC
             val popularMoviesView=layoutInflater.inflate(R.layout.movies_single_line, parent, false)
             return PopularMoviesViewHolder(popularMoviesView)
         } else if (viewType == PEOPLE_MOVIES) {
-            val peopleMoviesView=layoutInflater.inflate(R.layout.person_info_single_line, parent, false)
+            val peopleMoviesView=layoutInflater.inflate(R.layout.upcoming_movie_single_line, parent, false)
             return PeopleMoviesViewHolder(peopleMoviesView)
         } else {
             throw IllegalArgumentException("Unexpected view type")
@@ -52,12 +53,12 @@ class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieC
                 popularMoviesViewHolder.movieList.adapter = adapter
 
             }
-            is MoviesModel.PeopleInfoModel -> {
+            is MoviesModel.UpcomingMoviesModel -> {
                 val peopleMoviesViewHolder = holder as PeopleMoviesViewHolder
                 peopleMoviesViewHolder.peopleHeader.text = movieModel.textPeople
 
-                val peopleList = movieModel.peopleInfoList
-                val peopleAdapter = PeopleAdapter(peopleList, peopleClickListener)
+                val peopleList = movieModel.upcomingMovieList
+                val peopleAdapter = UpcomingMovieAdapter(peopleList, peopleClickListener)
                 peopleMoviesViewHolder.peopleList.adapter = peopleAdapter
             }
         }
@@ -65,7 +66,7 @@ class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieC
 
     override fun getItemViewType(position: Int): Int {
         return when (moviesList[position]) {
-            is MoviesModel.PeopleInfoModel -> 101
+            is MoviesModel.UpcomingMoviesModel -> 101
             is MoviesModel.PopularMoviesModel -> 100
         }
     }
