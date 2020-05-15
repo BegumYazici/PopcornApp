@@ -28,9 +28,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-
 @BindingAdapter("popularMovieStatus")
-fun bindStatus(statusImageView: ImageView, movieStatus: MoviesApiStatus?) {
+fun bindStatusPopularMovie(statusImageView: ImageView, movieStatus: MoviesApiStatus?) {
     when (movieStatus) {
         MoviesApiStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
@@ -53,7 +52,6 @@ fun bindStatusUpcoming(statusImageView: ImageView, movieStatus: UpcomingMovieApi
         UpcomingMovieApiStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
-
         }
         UpcomingMovieApiStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE

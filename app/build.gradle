@@ -65,4 +65,7 @@ dependencies {
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$version_glide"
+
+    //Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_http_logging_interceptor"
 }
