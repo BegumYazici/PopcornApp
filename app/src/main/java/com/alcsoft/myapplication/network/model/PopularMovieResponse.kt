@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.network.popularMovie.model
+package com.alcsoft.myapplication.network.model
 
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.squareup.moshi.Json

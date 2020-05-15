@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.MoviesApiStatus
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieApiStatus
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -41,6 +42,24 @@ fun bindStatus(statusImageView: ImageView, movieStatus: MoviesApiStatus?) {
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
         MoviesApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("upcomingMovieStatus")
+fun bindStatusUpcoming(statusImageView: ImageView, movieStatus: UpcomingMovieApiStatus?) {
+    when (movieStatus) {
+        UpcomingMovieApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+
+        }
+        UpcomingMovieApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        UpcomingMovieApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
     }

@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.network.upcomingMovie.model
+package com.alcsoft.myapplication.network.model
 
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
 import com.squareup.moshi.Json
@@ -30,7 +30,7 @@ fun UpcomingMovieResponse.toUpcomingMovieModel() : List<UpcomingMovieModel>{
     for(i in results){
         upComingMovielist.add(
             UpcomingMovieModel(
-                upcomingMovieImage = IMAGE_BASE_URL+ i.upcomingMovieImage,
+                upcomingMovieImage = IMAGE_BASE_URL + i.upcomingMovieImage,
                 upcomingMovieName = i.upcomingMovieName,
                 upcomingMovieDate = i.upcomingReleaseDate))
     }

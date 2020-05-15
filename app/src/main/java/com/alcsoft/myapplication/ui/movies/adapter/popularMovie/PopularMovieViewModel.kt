@@ -3,8 +3,8 @@ package com.alcsoft.myapplication.ui.movies.adapter.popularMovie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alcsoft.myapplication.network.popularMovie.PopularMovieApi
-import com.alcsoft.myapplication.network.popularMovie.model.PopularMovieResponse
+import com.alcsoft.myapplication.network.service.MovieApi
+import com.alcsoft.myapplication.network.model.PopularMovieResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,7 +35,7 @@ class PopularMovieViewModel : ViewModel() {
 
     private fun getPopularMovies() {
         coroutineScope.launch {
-            val getPopularMovies = PopularMovieApi.retrofitService.getPopularMovies()
+            val getPopularMovies = MovieApi.retrofitService.getPopularMovies()
             try {
                 _status.value = MoviesApiStatus.LOADING
                 val popularMoviesList =getPopularMovies.await()

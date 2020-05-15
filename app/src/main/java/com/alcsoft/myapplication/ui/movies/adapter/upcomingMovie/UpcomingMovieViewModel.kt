@@ -3,8 +3,8 @@ package com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alcsoft.myapplication.network.upcomingMovie.UpcomingMovieApi
-import com.alcsoft.myapplication.network.upcomingMovie.model.UpcomingMovieResponse
+import com.alcsoft.myapplication.network.service.MovieApi
+import com.alcsoft.myapplication.network.model.UpcomingMovieResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 enum class UpcomingMovieApiStatus {
     ERROR,
     LOADING,
-    SUCCESS
+    DONE
 }
 
 class UpcomingMovieViewModel : ViewModel() {
@@ -35,12 +35,12 @@ class UpcomingMovieViewModel : ViewModel() {
 
     private fun getUpcomingMovies() {
         coroutineScope.launch {
-            val getUpcomingMovieList = UpcomingMovieApi.retrofitService.getUpcomingMovies()
+            val getUpcomingMovieList = MovieApi.retrofitServiceUpcoming.getUpcomingMovies()
             try {
                 _status.value = UpcomingMovieApiStatus.LOADING
                 val upcomingMovieList = getUpcomingMovieList.await()
                 _upcomingMovieResponse.value = upcomingMovieList
-                _status.value = UpcomingMovieApiStatus.SUCCESS
+                _status.value = UpcomingMovieApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = UpcomingMovieApiStatus.ERROR
             }

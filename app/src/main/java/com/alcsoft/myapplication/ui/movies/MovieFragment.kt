@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentMoviesBinding
-import com.alcsoft.myapplication.network.popularMovie.model.toPopularMovieModel
-import com.alcsoft.myapplication.network.upcomingMovie.model.toUpcomingMovieModel
+import com.alcsoft.myapplication.network.model.toPopularMovieModel
+import com.alcsoft.myapplication.network.model.toUpcomingMovieModel
 import com.alcsoft.myapplication.ui.movies.adapter.MovieAdapter
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieViewModel
