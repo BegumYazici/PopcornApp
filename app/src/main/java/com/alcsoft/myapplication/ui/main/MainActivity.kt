@@ -1,14 +1,14 @@
 package com.alcsoft.myapplication.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.alcsoft.myapplication.R
-import com.google.android.material.chip.Chip
-import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.chips_layout.*
+import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
+import com.alcsoft.myapplication.ui.detailMovie.DetailPopularMovieFragment
+import com.alcsoft.myapplication.ui.detailMovie.DetailUpcomingMovieFragment
+import com.alcsoft.myapplication.ui.homePage.HomeFragment
+import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
+import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,47 +16,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        addChips()
-        addTabsWithViewPager()
-    }
+        val homeFragment = HomeFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, homeFragment)
+            .commit()
 
-    private fun addChips() {
-        val genreNames = this.resources.getStringArray(R.array.genreTypes)
-        val genreList = mutableListOf<String>()
+        val detailPopularMovieFragment = DetailPopularMovieFragment()
+        val detailUpcomingMovieFragment = DetailUpcomingMovieFragment()
 
-        for (j in 0..genreNames.size.minus(1)) {
-            genreList.add(genreNames[j])
-        }
-
-        for (i in 0..genreList.size.minus(1)) {
-            val chip = Chip(this, null,
-                R.attr.CustomChipChoiceStyle
-            )
-            chip.text = genreList[i]
-            chip.isCheckable = true
-            chip.isClickable = true
-            chip.isFocusable = true
-
-            chip.setOnClickListener {
-                Toast.makeText(this, genreList[i] + " is clicked.", Toast.LENGTH_SHORT).show()
+        homeFragment.detailClickListener = object : DetailClickListener {
+            override fun popularMovieClickListener(popularMovieModel: PopularMovieModel) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container_view, detailPopularMovieFragment)
+                    .commit()
             }
-            chip_group.addView(chip)
+
+            override fun upComingClickListener(upcomingMovieModel: UpcomingMovieModel) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container_view, detailUpcomingMovieFragment)
+                    .commit()
+            }
         }
-    }
-
-    private fun addTabsWithViewPager() {
-        val tabsText: Array<String> = applicationContext.resources.getStringArray(R.array.tabs)
-        val tabsIcon: Array<Int> =
-            arrayOf(
-                R.drawable.ic_movie_black_24dp,
-                R.drawable.ic_tv_black_24dp
-            )
-
-        viewPager.adapter = MainPagerAdapter(this)
-
-        TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
-            tab.text = tabsText[position]
-            tab.icon = ContextCompat.getDrawable(this, tabsIcon[position])
-        }.attach()
     }
 }

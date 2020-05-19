@@ -1,13 +1,16 @@
-package com.alcsoft.myapplication.ui.main
+package com.alcsoft.myapplication.ui.homePage
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.MovieFragment
 import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
 
-class MainPagerAdapter(fragmentActivity: FragmentActivity) :
-    FragmentStateAdapter(fragmentActivity) {
+class HomePagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle,val detailClickListener: DetailClickListener) :
+    FragmentStateAdapter(fragmentManager,lifecycle) {
+
 
     override fun getItemCount(): Int {
         return TAB_COUNT
@@ -15,7 +18,7 @@ class MainPagerAdapter(fragmentActivity: FragmentActivity) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            POSITION_MOVIES -> MovieFragment()
+            POSITION_MOVIES -> MovieFragment(detailClickListener)
             POSITION_TV_SHOWS -> TvShowsFragment()
             else -> throw IllegalStateException("Undefined position $position. Max count is $TAB_COUNT")
         }

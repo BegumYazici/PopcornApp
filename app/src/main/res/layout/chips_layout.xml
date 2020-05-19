@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:chipSpacing="10dp"
+        android:layout_marginStart="10dp"
+        app:chipSpacing="5dp"
         app:singleLine="true"
         app:singleSelection="true">
 
