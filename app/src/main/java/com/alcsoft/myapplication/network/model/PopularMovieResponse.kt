@@ -23,6 +23,8 @@ data class PopularMovieDetail(
     @field:Json(name = "overview")
     val popularMovieDetail: String,
     val release_date: String,
+    @field:Json(name="backdrop_path")
+    val backdropImage: String,
     val genre_ids: List<Int>
 ) {
     val popularityConvertToRate = popularMovieRating.toFloat()
@@ -37,7 +39,10 @@ fun PopularMovieResponse.toPopularMovieModel(): List<PopularMovieModel> {
             PopularMovieModel(
                 movieImage = IMAGE_BASE_URL+ item.popularMovieImage,
                 movieRating = (item.popularMovieRating.toFloat())/2,
-                movieName = item.popularMovieName
+                movieName = item.popularMovieName,
+                releaseDate = item.release_date,
+                popularMovieDetail = item.popularMovieDetail,
+                backdropPath = IMAGE_BASE_URL + item.backdropImage
             )
         )
     }

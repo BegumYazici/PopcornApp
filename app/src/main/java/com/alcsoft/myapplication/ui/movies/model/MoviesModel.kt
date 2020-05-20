@@ -1,6 +1,7 @@
 package com.alcsoft.myapplication.ui.movies.model
 
-data class PopularMovieModel(val movieImage: String, val movieRating: Float, val movieName: String)
+data class PopularMovieModel(val movieImage: String, val movieRating: Float?, val movieName: String,
+                             val popularMovieDetail: String, val releaseDate:String, val backdropPath:String)
 
 data class UpcomingMovieModel(
     val upcomingMovieImage: String,

@@ -8,6 +8,7 @@
 
     <string name="movies">Movies</string>
     <string name="tv_shows">Tv Shows</string>
+    <string name="overview">Overview</string>
 
     <array name="tabs">
         <item>Movies</item>

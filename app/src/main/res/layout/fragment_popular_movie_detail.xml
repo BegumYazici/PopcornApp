@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detailMovie.DetailPopularMovieFragment">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+        <variable
+            name="popularMovieDetail"
+            type="com.alcsoft.myapplication.ui.movies.model.PopularMovieModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Welcome to Popular Movie Detail Page" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/popular_movie_image_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <ImageView
+                    android:id="@+id/backdrop_image"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:src="@drawable/movie"
+                    app:imageUrl="@{popularMovieDetail.backdropPath}" />
+
+                <ImageView
+                    android:id="@+id/popular_movie_image"
+                    android:layout_width="110dp"
+                    android:layout_height="170dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="25dp"
+                    android:src="@drawable/people"
+                    app:imageUrl="@{popularMovieDetail.movieImage}" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/popular_movie_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:text="@{popularMovieDetail.movieName}"
+                    android:textSize="20sp"
+                    tools:text="Ad Astra" />
+
+                <TextView
+                    android:id="@+id/popular_movie_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{popularMovieDetail.releaseDate}"
+                    android:textSize="20sp"
+                    tools:text="19.10.2020" />
+
+                <TextView
+                    android:id="@+id/popular_movie_overview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{popularMovieDetail.popularMovieDetail}"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    tools:text="The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown." />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
+

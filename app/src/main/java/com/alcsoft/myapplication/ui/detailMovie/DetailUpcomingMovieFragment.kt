@@ -13,6 +13,6 @@ class DetailUpcomingMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail_upcoming_movie, container, false)
+        return inflater.inflate(R.layout.fragment_upcoming_movie_detail, container, false)
     }
 }

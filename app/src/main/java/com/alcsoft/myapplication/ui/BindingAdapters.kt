@@ -1,6 +1,5 @@
 package com.alcsoft.myapplication.ui
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
@@ -14,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions
 /* Use Glide Library*/
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    Log.i("deneme", "imageUrl= $imgUrl")
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)

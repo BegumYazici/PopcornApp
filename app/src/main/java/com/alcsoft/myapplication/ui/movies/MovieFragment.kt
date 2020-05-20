@@ -30,7 +30,6 @@ class MovieFragment(val detailClickListener : DetailClickListener) : Fragment() 
     private lateinit var popularMovieViewModel: PopularMovieViewModel
     private lateinit var upcomingMovieViewModel: UpcomingMovieViewModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
