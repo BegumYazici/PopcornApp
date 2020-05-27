@@ -2,8 +2,11 @@ package com.alcsoft.myapplication.ui.movies.adapter.popularMovie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.ItemMovieBinding
+import com.alcsoft.myapplication.databinding.ItemMovieBindingImpl
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 
 class PopularMovieAdapter(private val popularMovieList: List<PopularMovieModel>,

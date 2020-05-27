@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="popularMovieDetail"
             type="com.alcsoft.myapplication.ui.movies.model.PopularMovieModel" />
@@ -10,7 +11,8 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,7 +20,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/popular_movie_image_frame"
+                android:id="@+id/upcoming_movie_image_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -32,7 +34,7 @@
                     app:imageUrl="@{popularMovieDetail.backdropPath}" />
 
                 <ImageView
-                    android:id="@+id/popular_movie_image"
+                    android:id="@+id/upcoming_movie_image"
                     android:layout_width="110dp"
                     android:layout_height="170dp"
                     android:layout_gravity="bottom"
@@ -48,28 +50,34 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/popular_movie_name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:text="@{popularMovieDetail.movieName}"
-                    android:textSize="20sp"
-                    tools:text="Ad Astra" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/upcoming_movie_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@{popularMovieDetail.movieName}"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Ad Astra" />
+
+                    <TextView
+                        android:id="@+id/upcoming_movie_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:text="@{popularMovieDetail.releaseDate}"
+                        android:textSize="18sp"
+                        tools:text="19.10.2020" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/popular_movie_release_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@{popularMovieDetail.releaseDate}"
-                    android:textSize="20sp"
-                    tools:text="19.10.2020" />
-
-                <TextView
-                    android:id="@+id/popular_movie_overview"
+                    android:id="@+id/upcoming_movie_overview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -81,7 +89,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 </layout>
 

@@ -8,5 +8,5 @@
     <color name="colorUnChecked">#9C27B0</color>
     <color name="color1">#FF9800</color>
     <color name="color2">#03A9F4</color>
-
+    <color name="backgroundColor">#f6ecd7</color>
 </resources>

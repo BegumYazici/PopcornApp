@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         val detailUpcomingMovieFragment = DetailUpcomingMovieFragment()
 
         homeFragment.detailClickListener = object : DetailClickListener {
-            override fun popularMovieClickListener(popularMovieModel: PopularMovieModel) {
 
+            override fun popularMovieClickListener(popularMovieModel: PopularMovieModel) {
                 val bundle = Bundle()
                 bundle.putString("popularMovieDetail",popularMovieModel.popularMovieDetail)
                 bundle.putString("popularMovieName",popularMovieModel.movieName)
@@ -44,6 +44,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun upComingClickListener(upcomingMovieModel: UpcomingMovieModel) {
+                val bundle = Bundle()
+                bundle.putString("upcomingMovieName",upcomingMovieModel.upcomingMovieName)
+                bundle.putString("upcomingMovieImage",upcomingMovieModel.upcomingMovieImage)
+                bundle.putString("upcomingMovieBackDropImage",upcomingMovieModel.backdropPath)
+                bundle.putString("releaseDate",upcomingMovieModel.upcomingMovieDate)
+                bundle.putString("overview",upcomingMovieModel.upcomingMovieOverview)
+
+                detailUpcomingMovieFragment.arguments = bundle
+
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_view, detailUpcomingMovieFragment)
                     .addToBackStack(null)
