@@ -1,8 +1,8 @@
 package com.alcsoft.myapplication
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
+import java.text.SimpleDateFormat
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -10,8 +10,16 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+
+        val stringDate = "05-05-2020"
+
+        val date = SimpleDateFormat("dd-MM-yyyy").parse(stringDate)
+
+        val formattedDate = SimpleDateFormat("dd.MM.yy").format(date)
+
+        assertEquals("05.05.2020", formattedDate)
     }
 }

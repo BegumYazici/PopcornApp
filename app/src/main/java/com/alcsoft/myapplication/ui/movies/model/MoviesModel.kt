@@ -6,7 +6,9 @@ data class PopularMovieModel(val movieImage: String, val movieRating: Float?, va
 data class UpcomingMovieModel(
     val upcomingMovieImage: String,
     val upcomingMovieName: String,
-    val upcomingMovieDate: String
+    val upcomingMovieDate: String,
+    val backdropPath:String,
+    val upcomingMovieOverview:String
 )
 
 sealed class MoviesModel {

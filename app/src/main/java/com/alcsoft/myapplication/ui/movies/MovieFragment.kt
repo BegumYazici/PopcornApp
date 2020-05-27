@@ -51,7 +51,11 @@ class MovieFragment(val detailClickListener : DetailClickListener) : Fragment() 
         })
 
         upcomingMovieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
-            val upComingMovieList = it.toUpcomingMovieModel()
+
+            val upComingMovieList  = mutableListOf<UpcomingMovieModel>()
+            for(i in it){
+                upComingMovieList.add(i.toUpcomingMovieModel())
+            }
             moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
 
             val moviesAdapter = MovieAdapter(moviesList, object :

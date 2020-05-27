@@ -40,7 +40,7 @@ fun PopularMovieResponse.toPopularMovieModel(): List<PopularMovieModel> {
                 movieImage = IMAGE_BASE_URL+ item.popularMovieImage,
                 movieRating = (item.popularMovieRating.toFloat())/2,
                 movieName = item.popularMovieName,
-                releaseDate = item.release_date,
+                releaseDate = item.release_date.substring(0,4),
                 popularMovieDetail = item.popularMovieDetail,
                 backdropPath = IMAGE_BASE_URL + item.backdropImage
             )

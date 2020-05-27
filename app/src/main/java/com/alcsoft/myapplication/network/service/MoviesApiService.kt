@@ -34,6 +34,7 @@ object MovieApi {
     private val okHttpClient: OkHttpClient.Builder = OkHttpClient.Builder()
         .addInterceptor(logging)
 
+
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
