@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.tvShows.TvShowsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/fragment_tv_shows_recyclerview"
+       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+       app:spanCount="3"
+       android:padding="6dp"/>
 
 </FrameLayout>
