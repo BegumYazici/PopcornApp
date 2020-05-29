@@ -1,29 +1,25 @@
 package com.alcsoft.myapplication.ui.tvShows.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.alcsoft.myapplication.R
+import com.alcsoft.myapplication.databinding.ItemTvShowBinding
 import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
 
 class TvShowsAdapter(private val tvShowsList: List<TvShowModel>): RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder>() {
 
-    class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val tvShowImage = itemView.findViewById<ImageView>(R.id.tv_show_image)
-        val tvShowRatingBar = itemView.findViewById<RatingBar>(R.id.tv_show_rating)
-        val tvShowName = itemView.findViewById<TextView>(R.id.tv_show_name)
-        val tvShowReleaseDate = itemView.findViewById<TextView>(R.id.tv_show_release_date)
+    class TvShowViewHolder(private val binding:ItemTvShowBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(tvShowModel: TvShowModel) {
+            binding.tvShowModel = tvShowModel
+            binding.executePendingBindings()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
         val layoutInflater=LayoutInflater.from(parent.context)
-        val view =layoutInflater.inflate(R.layout.item_tv_show,parent,false)
+        val tvShowBinding = ItemTvShowBinding.inflate(layoutInflater,parent,false)
 
-        return TvShowViewHolder(view)
+        return TvShowViewHolder(tvShowBinding)
     }
 
     override fun getItemCount(): Int {
@@ -32,9 +28,6 @@ class TvShowsAdapter(private val tvShowsList: List<TvShowModel>): RecyclerView.A
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         val tvShowModel = tvShowsList[position]
-        holder.tvShowImage.setImageResource(tvShowModel.tvShowImage)
-        holder.tvShowName.text = tvShowModel.tvShowName
-        holder.tvShowReleaseDate.text = tvShowModel.tvShowDate
-        holder.tvShowRatingBar.rating = tvShowModel.tvShowsRating!!
+        holder.bind(tvShowModel)
     }
 }
