@@ -36,7 +36,7 @@ class UpcomingMovieViewModel : ViewModel() {
 
     private fun getUpcomingMovies() {
         coroutineScope.launch {
-            val getUpcomingMovieList = MovieApi.retrofitServiceUpcoming.getUpcomingMovies()
+            val getUpcomingMovieList = MovieApi.retrofitServiceUpcomingMovie.getUpcomingMovies()
             try {
                 _status.value = UpcomingMovieApiStatus.LOADING
                 val upcomingMovieList = getUpcomingMovieList.await()

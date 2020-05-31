@@ -11,7 +11,6 @@ import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
 class HomePagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle,val detailClickListener: DetailClickListener) :
     FragmentStateAdapter(fragmentManager,lifecycle) {
 
-
     override fun getItemCount(): Int {
         return TAB_COUNT
     }

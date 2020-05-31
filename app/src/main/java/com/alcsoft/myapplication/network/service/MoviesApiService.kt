@@ -1,5 +1,6 @@
 package com.alcsoft.myapplication.network.service
 
+import com.alcsoft.myapplication.network.model.GenreMovieResponse
 import com.alcsoft.myapplication.network.model.PopularMovieResponse
 import com.alcsoft.myapplication.network.model.TvShowResponse
 import com.alcsoft.myapplication.network.model.UpcomingMovieResponse
@@ -18,6 +19,8 @@ private const val UPCOMING_MOVIE_PATH =
     "movie/upcoming?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
 private const val TV_SHOWS_PATH =
     "tv/popular?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
+private const val MOVIE_GENRE_TYPE_PATH =
+    "genre/movie/list?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US"
 
 interface PopularMoviesApiService {
     @GET(POPULAR_MOVIE_PATH)
@@ -29,9 +32,14 @@ interface UpcomingMovieApiService {
     fun getUpcomingMovies(): Deferred<UpcomingMovieResponse>
 }
 
-interface TvShowsApiService{
+interface TvShowsApiService {
     @GET(TV_SHOWS_PATH)
     fun getTvShows(): Deferred<TvShowResponse>
+}
+
+interface GenreMovieApiService {
+    @GET(MOVIE_GENRE_TYPE_PATH)
+    fun getGenreTypes(): Deferred<GenreMovieResponse>
 }
 
 object MovieApi {
@@ -48,15 +56,19 @@ object MovieApi {
         .client(okHttpClient.build())
         .build()
 
-    val retrofitService: PopularMoviesApiService by lazy {
+    val retrofitServicePopularMovie: PopularMoviesApiService by lazy {
         retrofit.create(PopularMoviesApiService::class.java)
     }
 
-    val retrofitServiceUpcoming: UpcomingMovieApiService by lazy {
+    val retrofitServiceUpcomingMovie: UpcomingMovieApiService by lazy {
         retrofit.create(UpcomingMovieApiService::class.java)
     }
 
     val retrofitServiceTvShows: TvShowsApiService by lazy {
         retrofit.create(TvShowsApiService::class.java)
+    }
+
+    val retrofitServiceMovieGenreType: GenreMovieApiService by lazy {
+        retrofit.create(GenreMovieApiService::class.java)
     }
 }
