@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorChecked">#8BC34A</color>
-    <color name="colorUnChecked">#9C27B0</color>
-    <color name="color1">#FF9800</color>
-    <color name="color2">#03A9F4</color>
+    <color name="colorChecked">#b771c3</color>
+    <color name="colorUnChecked">#860d8d</color>b771c3
+    <color name="color1">#045f9c</color>
+    <color name="color2">#3da4ea</color>
     <color name="backgroundColor">#f6ecd7</color>
 </resources>

@@ -36,11 +36,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getMovieGenreTypes()
+        getMovieGenre()
         addTabsWithViewPager()
     }
 
-    private fun getMovieGenreTypes(){
+    private fun getMovieGenre(){
         coroutineScope.launch {
             val movieGenreTypeList = MovieApi.retrofitServiceMovieGenreType.getGenreTypes()
             try {
