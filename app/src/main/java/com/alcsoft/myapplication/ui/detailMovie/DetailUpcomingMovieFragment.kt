@@ -37,7 +37,7 @@ class DetailUpcomingMovieFragment : Fragment() {
         upcomingDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_upcoming_movie_detail, container, false)
         upcomingDataBinding.lifecycleOwner = viewLifecycleOwner
 
-        upcomingDataBinding.upcomingMovieDetail = UpcomingMovieModel(movieImage,movieName,movieDate,movieBackDropPath,movieOverview)
+        upcomingDataBinding.upcomingMovieDetail = UpcomingMovieModel(movieImage,movieName,movieDate,movieBackDropPath,movieOverview,null)
 
         return upcomingDataBinding.root
     }

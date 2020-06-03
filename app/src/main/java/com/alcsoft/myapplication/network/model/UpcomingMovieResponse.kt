@@ -39,6 +39,7 @@ fun UpComingMovieDetail.toUpcomingMovieModel(): UpcomingMovieModel {
         upcomingMovieName,
         upcomingReleaseDate,
         IMAGE_BASE_URL + backdrop_path,
-        overview
+        overview,
+        genreList = genre_ids
     )
 }

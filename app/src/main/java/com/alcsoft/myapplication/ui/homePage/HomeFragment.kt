@@ -27,6 +27,8 @@ class HomeFragment : Fragment() {
 
     var detailClickListener: DetailClickListener? = null
 
+    lateinit var homePagerAdapter: HomePagerAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +42,7 @@ class HomeFragment : Fragment() {
         addTabsWithViewPager()
     }
 
-    private fun getMovieGenre(){
+    private fun getMovieGenre() {
         coroutineScope.launch {
             val movieGenreTypeList = MovieApi.retrofitServiceMovieGenreType.getGenreTypes()
             try {
@@ -53,8 +55,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun addChips(genreList : List<GenreDetail>) {
-        for(genre in genreList){
+    private fun addChips(genreList: List<GenreDetail>) {
+        for (genre in genreList) {
             val chip = Chip(
                 context, null,
                 R.attr.CustomChipChoiceStyle
@@ -66,6 +68,7 @@ class HomeFragment : Fragment() {
 
             chip.setOnClickListener {
                 Toast.makeText(context, genre.name + " is clicked.", Toast.LENGTH_SHORT).show()
+                homePagerAdapter.chipClicked(genre)
             }
             chip_group.addView(chip)
         }
@@ -73,10 +76,10 @@ class HomeFragment : Fragment() {
 
     private fun addTabsWithViewPager() {
         val tabsText: Array<String> = context!!.resources.getStringArray(R.array.tabs)
-        val tabsIcon: Array<Int> =
-            arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
+        val tabsIcon: Array<Int> = arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
 
-        viewPager.adapter = HomePagerAdapter(childFragmentManager, lifecycle, detailClickListener!!)
+        homePagerAdapter = HomePagerAdapter(childFragmentManager, lifecycle, detailClickListener!!)
+        viewPager.adapter = homePagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
             tab.text = tabsText[position]

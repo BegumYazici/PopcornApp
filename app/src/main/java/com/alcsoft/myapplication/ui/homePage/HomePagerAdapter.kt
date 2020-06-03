@@ -4,12 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.MovieFragment
 import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
 
-class HomePagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle,val detailClickListener: DetailClickListener) :
-    FragmentStateAdapter(fragmentManager,lifecycle) {
+class HomePagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, val detailClickListener: DetailClickListener
+) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
+
+    private val movieFragment = MovieFragment(detailClickListener)
+    private val tvShowsFragment = TvShowsFragment()
 
     override fun getItemCount(): Int {
         return TAB_COUNT
@@ -17,10 +22,14 @@ class HomePagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle,val
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            POSITION_MOVIES -> MovieFragment(detailClickListener)
-            POSITION_TV_SHOWS -> TvShowsFragment()
+            POSITION_MOVIES -> movieFragment
+            POSITION_TV_SHOWS -> tvShowsFragment
             else -> throw IllegalStateException("Undefined position $position. Max count is $TAB_COUNT")
         }
+    }
+
+    fun chipClicked(genre: GenreDetail) {
+        movieFragment.chipClicked(genre)
     }
 
     companion object {

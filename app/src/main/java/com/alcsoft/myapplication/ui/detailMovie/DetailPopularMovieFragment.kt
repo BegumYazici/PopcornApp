@@ -12,7 +12,7 @@ import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 
 class DetailPopularMovieFragment : Fragment() {
 
-    private lateinit var detailMovieBinding : FragmentPopularMovieDetailBinding
+    private lateinit var detailMovieBinding: FragmentPopularMovieDetailBinding
 
     private lateinit var movieName: String
     private lateinit var movieDetail: String
@@ -35,9 +35,22 @@ class DetailPopularMovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        detailMovieBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_popular_movie_detail, container, false)
+        detailMovieBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_popular_movie_detail,
+            container,
+            false
+        )
         detailMovieBinding.lifecycleOwner = viewLifecycleOwner
-        detailMovieBinding.popularMovieDetail = PopularMovieModel(movieImage,null,movieName,movieDetail,movieReleaseDate,backdropPathImage)
+        detailMovieBinding.popularMovieDetail = PopularMovieModel(
+            movieImage,
+            null,
+            movieName,
+            movieDetail,
+            movieReleaseDate,
+            backdropPathImage,
+            null
+        )
 
         return detailMovieBinding.root
     }
