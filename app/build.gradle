@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -47,6 +48,9 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
+    //LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
@@ -68,4 +72,6 @@ dependencies {
 
     //Interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:$version_http_logging_interceptor"
+
+    implementation "androidx.multidex:multidex:$multidex_version"
 }
