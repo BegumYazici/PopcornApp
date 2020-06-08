@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui
+package com.alcsoft.myapplication.ui.util
 
 import android.view.View
 import android.widget.ImageView

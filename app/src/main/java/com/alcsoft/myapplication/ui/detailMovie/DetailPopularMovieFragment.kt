@@ -54,6 +54,11 @@ class DetailPopularMovieFragment : Fragment() {
 
         return detailMovieBinding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        detailMovieBinding.unbind()
+    }
 }
 
 /*  root.popular_movie_name.text = movieName

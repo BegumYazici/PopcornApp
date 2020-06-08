@@ -38,4 +38,9 @@ class TvShowsFragment : Fragment() {
 
         return tvShowsBinding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tvShowsBinding.unbind()
+    }
 }

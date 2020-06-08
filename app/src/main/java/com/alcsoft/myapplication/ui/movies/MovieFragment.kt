@@ -1,6 +1,7 @@
 package com.alcsoft.myapplication.ui.movies
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
 
-class MovieFragment(private val detailClickListener: DetailClickListener) : Fragment(),
+class MovieFragment(private var detailClickListener: DetailClickListener?) : Fragment(),
     PopularMovieListener, UpcomingMovieListener {
 
     private lateinit var movieBinding: FragmentMoviesBinding
@@ -70,6 +71,22 @@ class MovieFragment(private val detailClickListener: DetailClickListener) : Frag
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("onStart","onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("onResume","onResume")
+        val x = popularMovieViewModel.popularMovieResponse.value
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        movieBinding.unbind()
+    }
+
     fun chipClicked(genre: GenreDetail) {
         val popularMovieResponse = popularMovieViewModel.popularMovieResponse.value
         val popularMovieList = popularMovieResponse!!.toPopularMovieModel()
@@ -88,7 +105,7 @@ class MovieFragment(private val detailClickListener: DetailClickListener) : Frag
         )
         movieAdapter.notifyDataSetChanged()
 
-        val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
+ /*     val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
         val upComingMovieList = mutableListOf<UpcomingMovieModel>()
 
         for (i in upComingMovieDetailList!!) {
@@ -107,7 +124,8 @@ class MovieFragment(private val detailClickListener: DetailClickListener) : Frag
                 upcomingMovieList = filteredUpcomingMovieList
             )
         )
-        movieAdapter.notifyDataSetChanged()
+        movieAdapter.notifyDataSetChanged()  */
+
     }
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {

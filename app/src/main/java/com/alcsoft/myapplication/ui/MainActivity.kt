@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.main
+package com.alcsoft.myapplication.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,18 +22,20 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
 
-        val detailPopularMovieFragment = DetailPopularMovieFragment()
+
+
         val detailUpcomingMovieFragment = DetailUpcomingMovieFragment()
 
         homeFragment.detailClickListener = object : DetailClickListener {
 
             override fun popularMovieClickListener(popularMovieModel: PopularMovieModel) {
+                val detailPopularMovieFragment = DetailPopularMovieFragment()
                 val bundle = Bundle()
-                bundle.putString("popularMovieDetail",popularMovieModel.popularMovieDetail)
-                bundle.putString("popularMovieName",popularMovieModel.movieName)
-                bundle.putString("date",popularMovieModel.releaseDate)
-                bundle.putString("movieImage",popularMovieModel.movieImage)
-                bundle.putString("backdropPathImage",popularMovieModel.backdropPath)
+                bundle.putString("popularMovieDetail", popularMovieModel.popularMovieDetail)
+                bundle.putString("popularMovieName", popularMovieModel.movieName)
+                bundle.putString("date", popularMovieModel.releaseDate)
+                bundle.putString("movieImage", popularMovieModel.movieImage)
+                bundle.putString("backdropPathImage", popularMovieModel.backdropPath)
 
                 detailPopularMovieFragment.arguments = bundle
 
@@ -43,13 +45,14 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             }
 
+
             override fun upComingClickListener(upcomingMovieModel: UpcomingMovieModel) {
                 val bundle = Bundle()
-                bundle.putString("upcomingMovieName",upcomingMovieModel.upcomingMovieName)
-                bundle.putString("upcomingMovieImage",upcomingMovieModel.upcomingMovieImage)
-                bundle.putString("upcomingMovieBackDropImage",upcomingMovieModel.backdropPath)
-                bundle.putString("releaseDate",upcomingMovieModel.upcomingMovieDate)
-                bundle.putString("overview",upcomingMovieModel.upcomingMovieOverview)
+                bundle.putString("upcomingMovieName", upcomingMovieModel.upcomingMovieName)
+                bundle.putString("upcomingMovieImage", upcomingMovieModel.upcomingMovieImage)
+                bundle.putString("upcomingMovieBackDropImage", upcomingMovieModel.backdropPath)
+                bundle.putString("releaseDate", upcomingMovieModel.upcomingMovieDate)
+                bundle.putString("overview", upcomingMovieModel.upcomingMovieOverview)
 
                 detailUpcomingMovieFragment.arguments = bundle
 
@@ -59,5 +62,9 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
