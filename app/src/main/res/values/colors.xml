@@ -9,4 +9,5 @@
     <color name="color1">#045f9c</color>
     <color name="color2">#3da4ea</color>
     <color name="backgroundColor">#f6ecd7</color>
+    <color name="errorTypeColor">#030000</color>
 </resources>

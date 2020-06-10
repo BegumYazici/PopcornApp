@@ -24,6 +24,7 @@ import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieVi
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MovieFragment(private var detailClickListener: DetailClickListener?) : Fragment(),
     PopularMovieListener, UpcomingMovieListener {
@@ -91,6 +92,11 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     fun chipClicked(genre: GenreDetail) {
         moviesList.clear()
+        var isPopularMoviesSelectedByGenreEmpty = false
+        var isUpcomingMoviesSelectedByGenreEmpty = false
+
+        imageFindNotMovies.visibility = View.GONE
+        messageDialogTextView.visibility = View.GONE
 
         val popularMovieResponse = popularMovieViewModel.popularMovieResponse.value
         popularMovieList = popularMovieResponse!!.toPopularMovieModel()
@@ -107,6 +113,8 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
                     popularMovieList
                 )
             )
+        } else {
+            isPopularMoviesSelectedByGenreEmpty = true
         }
 
         val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
@@ -129,8 +137,16 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
             moviesList.add(
                 MoviesModel.UpcomingMoviesModel("Upcoming-${genre.name}", upComingMovieList)
             )
+        } else {
+            isUpcomingMoviesSelectedByGenreEmpty = true
         }
         movieAdapter.notifyDataSetChanged()
+
+        if (isPopularMoviesSelectedByGenreEmpty && isUpcomingMoviesSelectedByGenreEmpty) {
+            imageFindNotMovies.visibility = View.VISIBLE
+            messageDialogTextView.text = "Cannot find any movies for ${genre.name} type"
+            messageDialogTextView.visibility = View.VISIBLE
+        }
     }
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
