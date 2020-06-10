@@ -35,6 +35,9 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
     private val moviesList = mutableListOf<MoviesModel>()
     private val movieAdapter = MovieAdapter(moviesList, this, this)
 
+    private lateinit var popularMovieList: List<PopularMovieModel>
+    private lateinit var upComingMovieList: List<UpcomingMovieModel>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,15 +59,15 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         upcomingMovieViewModel = ViewModelProvider(this).get(UpcomingMovieViewModel::class.java)
 
         popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
-            val popularMovieList = it.toPopularMovieModel()
+            popularMovieList = it.toPopularMovieModel()
             moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
             movieAdapter.notifyDataSetChanged()
         })
 
         upcomingMovieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
-            val upComingMovieList = mutableListOf<UpcomingMovieModel>()
+            upComingMovieList = mutableListOf<UpcomingMovieModel>()
             for (i in it) {
-                upComingMovieList.add(i.toUpcomingMovieModel())
+                (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
             }
             moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
             movieAdapter.notifyDataSetChanged()
@@ -73,13 +76,12 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     override fun onStart() {
         super.onStart()
-        Log.i("onStart","onStart")
+        Log.i("onStart", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i("onResume","onResume")
-        val x = popularMovieViewModel.popularMovieResponse.value
+        Log.i("onResume", "onResume")
     }
 
     override fun onDestroyView() {
@@ -88,44 +90,47 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
     }
 
     fun chipClicked(genre: GenreDetail) {
+        moviesList.clear()
+
         val popularMovieResponse = popularMovieViewModel.popularMovieResponse.value
-        val popularMovieList = popularMovieResponse!!.toPopularMovieModel()
+        popularMovieList = popularMovieResponse!!.toPopularMovieModel()
 
-        val filteredPopularMovieList = mutableListOf<PopularMovieModel>()
-        for (i in popularMovieList) {
-            if ((genre.id == i.genreList!![0]) || (genre.id == i.genreList[1])) {
-                filteredPopularMovieList.add(i)
-            }
-        }
-        moviesList.add(
-            MoviesModel.PopularMoviesModel(
-                "Popular ${genre.name} Movies",
-                popularMoviesList = filteredPopularMovieList
+        val filteredPopularMovieList =
+            popularMovieList.filter { it.genreList?.contains(genre.id) ?: false }
+
+        popularMovieList = filteredPopularMovieList
+
+        if (popularMovieList.isNotEmpty()) {
+            moviesList.add(
+                MoviesModel.PopularMoviesModel(
+                    "Popular-${genre.name}",
+                    popularMovieList
+                )
             )
-        )
-        movieAdapter.notifyDataSetChanged()
+        }
 
- /*     val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
-        val upComingMovieList = mutableListOf<UpcomingMovieModel>()
+        val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
+        upComingMovieList = mutableListOf<UpcomingMovieModel>()
 
         for (i in upComingMovieDetailList!!) {
-            upComingMovieList.add(i.toUpcomingMovieModel())
+            (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
         }
 
         val filteredUpcomingMovieList = mutableListOf<UpcomingMovieModel>()
-        for (j in upComingMovieList) {
-            if ((genre.id == j.genreList!![0]) || (genre.id == j.genreList[1])) {
-                filteredUpcomingMovieList.add(j)
+        for (movieModel in upComingMovieList) {
+            val isRightMovie = movieModel.genreList?.contains(genre.id) ?: false
+            if (isRightMovie) {
+                filteredUpcomingMovieList.add(movieModel)
             }
         }
-        moviesList.add(
-            MoviesModel.UpcomingMoviesModel(
-                "Upcoming ${genre.name} Movies",
-                upcomingMovieList = filteredUpcomingMovieList
-            )
-        )
-        movieAdapter.notifyDataSetChanged()  */
 
+        upComingMovieList = filteredUpcomingMovieList
+        if (upComingMovieList.isNotEmpty()) {
+            moviesList.add(
+                MoviesModel.UpcomingMoviesModel("Upcoming-${genre.name}", upComingMovieList)
+            )
+        }
+        movieAdapter.notifyDataSetChanged()
     }
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
