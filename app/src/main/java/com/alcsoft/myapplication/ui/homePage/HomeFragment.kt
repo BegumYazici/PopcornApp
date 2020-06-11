@@ -13,6 +13,7 @@ import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.service.MovieApi
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.MovieFragment
+import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.chips_layout.*
@@ -40,11 +41,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getMovieGenre()
+        getGenres()
         addTabsWithViewPager()
     }
 
-    private fun getMovieGenre() {
+    private fun getGenres() {
         coroutineScope.launch {
             val movieGenreTypeList = MovieApi.retrofitServiceMovieGenreType.getGenreTypes()
             try {
@@ -69,6 +70,7 @@ class HomeFragment : Fragment() {
             chip.isFocusable = true
 
             chip.setOnClickListener {
+                //  chip_group.clearCheck()
                 onGenreClicked(genre)
                 Toast.makeText(context, genre.name + " is clicked.", Toast.LENGTH_SHORT).show()
             }
@@ -80,7 +82,11 @@ class HomeFragment : Fragment() {
         // Reference https://stackoverflow.com/a/61178226
         val currentPosition = viewPager.currentItem
         val currentFragment = childFragmentManager.findFragmentByTag("f$currentPosition")
-        (currentFragment as MovieFragment).chipClicked(genre)
+
+        when(currentFragment!!.tag ){
+            MOVIES_FRAGMENT_TAG ->  (currentFragment as MovieFragment).chipClicked(genre)
+            TV_SHOWS_FRAGMENT_TAG ->  (currentFragment as TvShowsFragment).chipClicked(genre)
+        }
     }
 
     private fun addTabsWithViewPager() {
@@ -110,5 +116,10 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         viewPager.adapter = null
+    }
+
+    companion object {
+        private const val MOVIES_FRAGMENT_TAG = "f0"
+        private const val TV_SHOWS_FRAGMENT_TAG = "f1"
     }
 }

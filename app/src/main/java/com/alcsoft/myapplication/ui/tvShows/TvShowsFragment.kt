@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentTvShowsBinding
+import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.toTvShowModel
 import com.alcsoft.myapplication.ui.tvShows.adapter.TvShowsAdapter
 import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
@@ -21,22 +22,56 @@ class TvShowsFragment : Fragment() {
     private lateinit var tvShowsViewModel: TvShowsViewModel
     private lateinit var tvShowsBinding: FragmentTvShowsBinding
 
+    private var tvShowsList = mutableListOf<TvShowModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         tvShowsViewModel = ViewModelProvider(this).get(TvShowsViewModel::class.java)
-        tvShowsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_tv_shows,container,false)
-
+        tvShowsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_tv_shows, container, false)
         tvShowsBinding.lifecycleOwner = viewLifecycleOwner
 
+        return tvShowsBinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        tvShowsList.clear()
+
         tvShowsViewModel.tvShowsResponse.observe(viewLifecycleOwner, Observer {
-            val tvShowsList: List<TvShowModel> = it.toTvShowModel()
+            tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
             tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
         })
+    }
 
-        return tvShowsBinding.root
+    fun chipClicked(genre: GenreDetail) {
+        tvShowsList.clear()
+
+        tvShowsGenre.visibility = View.GONE
+        imageFindNotMovies.visibility = View.GONE
+        messageDialogTextView.visibility = View.GONE
+
+        val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
+        tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
+
+        val filteredTvShowsList = tvShowsList.filter {
+            it.genre_ids.contains(genre.id)
+        }
+
+        tvShowsList = filteredTvShowsList as MutableList<TvShowModel>
+
+        if (tvShowsList.isNotEmpty()) {
+            tvShowsGenre.text = "${genre.name}"
+            tvShowsGenre.visibility = View.VISIBLE
+            tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
+            TvShowsAdapter(tvShowsList).notifyDataSetChanged()
+        } else {
+            imageFindNotMovies.visibility = View.VISIBLE
+            messageDialogTextView.text = "Cannot find any tv shows for ${genre.name} type"
+            messageDialogTextView.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroyView() {

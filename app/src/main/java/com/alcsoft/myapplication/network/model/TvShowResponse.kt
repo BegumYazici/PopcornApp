@@ -28,7 +28,8 @@ fun TvShowResponse.toTvShowModel(): List<TvShowModel> {
                 IMAGE_BASE_URL + i.poster_path,
                 (i.vote_average.toFloat()) / 2,
                 i.original_name,
-                i.first_air_date
+                i.first_air_date,
+                i.genre_ids
             )
         )
     }
