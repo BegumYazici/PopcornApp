@@ -5,6 +5,6 @@ data class GenreMovieResponse(
 )
 
 data class GenreDetail(
-    val id: Int,
+    var id: Int,
     val name: String
 )

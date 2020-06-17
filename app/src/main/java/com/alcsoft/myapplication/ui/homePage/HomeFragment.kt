@@ -32,15 +32,28 @@ class HomeFragment : Fragment() {
     private lateinit var homePagerAdapter: HomePagerAdapter
     private lateinit var tabLayoutMediator: TabLayoutMediator
 
+    private var selectedGenreID: Int? = null
+    private var currentGenreId : Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Log.i("homeFragment", "onCreateonCreate")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.i("homeFragment", "onCreateView")
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.i("homeFragment", "onViewCreated")
         getGenres()
         addTabsWithViewPager()
     }
@@ -59,6 +72,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun addChips(genreList: List<GenreDetail>) {
+
         for (genre in genreList) {
             val chip = Chip(
                 context, null,
@@ -68,11 +82,21 @@ class HomeFragment : Fragment() {
             chip.isCheckable = true
             chip.isClickable = true
             chip.isFocusable = true
+            chip.isChecked = genre.id == selectedGenreID
 
-            chip.setOnClickListener {
-                //  chip_group.clearCheck()
-                onGenreClicked(genre)
-                Toast.makeText(context, genre.name + " is clicked.", Toast.LENGTH_SHORT).show()
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selectedGenreID = genre.id
+                    currentGenreId = genre.id
+                    onGenreClicked(genre)
+                    Toast.makeText(context, genre.name + " is clicked.", Toast.LENGTH_SHORT).show()
+                } else {
+                    selectedGenreID = null
+                    Log.i("unChecked", "chip unchecked")
+                    if (currentGenreId == genre.id) {
+                        onGenreClickedRemoved()
+                    }
+                }
             }
             chip_group.addView(chip)
         }
@@ -83,9 +107,20 @@ class HomeFragment : Fragment() {
         val currentPosition = viewPager.currentItem
         val currentFragment = childFragmentManager.findFragmentByTag("f$currentPosition")
 
-        when(currentFragment!!.tag ){
-            MOVIES_FRAGMENT_TAG ->  (currentFragment as MovieFragment).chipClicked(genre)
-            TV_SHOWS_FRAGMENT_TAG ->  (currentFragment as TvShowsFragment).chipClicked(genre)
+        when (currentFragment!!.tag) {
+            MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).filterMoviesByGenre(genre)
+            TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).filterTvShowsByGenre(genre)
+        }
+    }
+
+    private fun onGenreClickedRemoved() {
+        val currentPosition = viewPager.currentItem
+        val currentFragment = childFragmentManager.findFragmentByTag("f$currentPosition")
+
+        return when (currentFragment!!.tag) {
+            MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).showMoviesList()
+            TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).showTvShowsList()
+            else -> throw IllegalStateException("Undefined position.")
         }
     }
 
@@ -94,7 +129,8 @@ class HomeFragment : Fragment() {
         val tabsIcon: Array<Int> =
             arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
 
-        homePagerAdapter = HomePagerAdapter(childFragmentManager, lifecycle, detailClickListener!!)
+        homePagerAdapter =
+            HomePagerAdapter(childFragmentManager, lifecycle, detailClickListener!!)
 
         tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
             tab.text = tabsText[position]

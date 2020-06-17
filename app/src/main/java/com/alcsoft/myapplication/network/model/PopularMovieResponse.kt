@@ -22,7 +22,7 @@ data class PopularMovieDetail(
     val popularMovieName: String,
     @field:Json(name = "overview")
     val popularMovieDetail: String,
-    val release_date: String,
+    val release_date: String?,
     @field:Json(name="backdrop_path")
     val backdropImage: String,
     val genre_ids: List<Int>
@@ -40,7 +40,7 @@ fun PopularMovieResponse.toPopularMovieModel(): List<PopularMovieModel> {
                 movieImage = IMAGE_BASE_URL+ item.popularMovieImage,
                 movieRating = (item.popularMovieRating.toFloat())/2,
                 movieName = item.popularMovieName,
-                releaseDate = item.release_date.substring(0,4),
+                releaseDate = item.release_date?.substring(0,4) ?: "",
                 popularMovieDetail = item.popularMovieDetail,
                 backdropPath = IMAGE_BASE_URL + item.backdropImage,
                 genreList = item.genre_ids

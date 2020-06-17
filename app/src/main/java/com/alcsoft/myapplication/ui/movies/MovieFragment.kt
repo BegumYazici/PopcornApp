@@ -1,7 +1,6 @@
 package com.alcsoft.myapplication.ui.movies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,31 +12,31 @@ import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentMoviesBinding
 import com.alcsoft.myapplication.network.model.GenreDetail
-import com.alcsoft.myapplication.network.model.toPopularMovieModel
 import com.alcsoft.myapplication.network.model.toUpcomingMovieModel
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.adapter.MovieAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.MovieViewModel
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
-import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieViewModel
 import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
-import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieViewModel
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
+import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MovieFragment(private var detailClickListener: DetailClickListener?) : Fragment(),
     PopularMovieListener, UpcomingMovieListener {
 
     private lateinit var movieBinding: FragmentMoviesBinding
-    private lateinit var popularMovieViewModel: PopularMovieViewModel
-    private lateinit var upcomingMovieViewModel: UpcomingMovieViewModel
+    private lateinit var movieViewModel: MovieViewModel
 
     private val moviesList = mutableListOf<MoviesModel>()
     private val movieAdapter = MovieAdapter(moviesList, this, this)
 
     private lateinit var popularMovieList: List<PopularMovieModel>
     private lateinit var upComingMovieList: List<UpcomingMovieModel>
+
+    private var genre: GenreDetail? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,53 +52,52 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         moviesList.clear()
+        movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
-        popularMovieViewModel = ViewModelProvider(this).get(PopularMovieViewModel::class.java)
-        upcomingMovieViewModel = ViewModelProvider(this).get(UpcomingMovieViewModel::class.java)
+        movieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
 
-        popularMovieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
-            popularMovieList = it.toPopularMovieModel()
-            moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
-            movieAdapter.notifyDataSetChanged()
+            popularMovieList = it
+
+            if (genre != null) {
+                filterMoviesByGenre(genre!!)
+            } else {
+                moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+                movieAdapter.notifyDataSetChanged()
+            }
+            moviesList.size
         })
 
-        upcomingMovieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
-            upComingMovieList = mutableListOf<UpcomingMovieModel>()
+        movieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
+            upComingMovieList = mutableListOf()
             for (i in it) {
                 (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
             }
-            moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
-            movieAdapter.notifyDataSetChanged()
+
+            if (genre != null) {
+                filterMoviesByGenre(genre!!)
+            } else {
+                moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
+                movieAdapter.notifyDataSetChanged()
+            }
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("onStart", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("onResume", "onResume")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        movieBinding.unbind()
-    }
-
-    fun chipClicked(genre: GenreDetail) {
+    fun filterMoviesByGenre(genre: GenreDetail) {
         moviesList.clear()
+
+        this.genre = genre
+
         var isPopularMoviesSelectedByGenreEmpty = false
         var isUpcomingMoviesSelectedByGenreEmpty = false
 
         imageFindNotMovies.visibility = View.GONE
         messageDialogTextView.visibility = View.GONE
 
-        val popularMovieResponse = popularMovieViewModel.popularMovieResponse.value
-        popularMovieList = popularMovieResponse!!.toPopularMovieModel()
+        val popularMovieResponse = movieViewModel.popularMovieResponse.value
+        popularMovieResponse?.let {
+            popularMovieList = popularMovieResponse
+        }
 
         val filteredPopularMovieList =
             popularMovieList.filter { it.genreList?.contains(genre.id) ?: false }
@@ -117,7 +115,7 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
             isPopularMoviesSelectedByGenreEmpty = true
         }
 
-        val upComingMovieDetailList = upcomingMovieViewModel.upcomingMovieResponse.value
+        val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
         upComingMovieList = mutableListOf<UpcomingMovieModel>()
 
         for (i in upComingMovieDetailList!!) {
@@ -149,6 +147,29 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         }
     }
 
+    fun showMoviesList() {
+        moviesList.clear()
+
+        imageFindNotMovies.visibility = View.GONE
+        messageDialogTextView.visibility = View.GONE
+        messageDialogTextView.toVisible()
+
+        val popularMovieResponse = movieViewModel.popularMovieResponse.value
+        popularMovieList = popularMovieResponse!!
+
+        moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+
+        val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
+
+        upComingMovieList = mutableListOf<UpcomingMovieModel>()
+        for (i in upComingMovieDetailList!!) {
+            (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
+        }
+
+        moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
+        movieAdapter.notifyDataSetChanged()
+    }
+
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
         detailClickListener?.popularMovieClickListener(popularMovieModel)
         Toast.makeText(
@@ -165,5 +186,10 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
             "${upcomingMovieModel.upcomingMovieName} is clicked.",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        movieBinding.unbind()
     }
 }

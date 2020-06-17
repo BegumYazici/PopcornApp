@@ -25,7 +25,7 @@ data class UpComingMovieDetail(
     val genre_ids: List<Int>,
     val overview: String,
     @field:Json(name = "release_date")
-    val upcomingReleaseDate: String
+    val upcomingReleaseDate: String?
 ) {
     //String -> Date
     fun getUpComingReleaseData(): Date {
@@ -37,7 +37,7 @@ fun UpComingMovieDetail.toUpcomingMovieModel(): UpcomingMovieModel {
     return UpcomingMovieModel(
         IMAGE_BASE_URL + upcomingMovieImage,
         upcomingMovieName,
-        upcomingReleaseDate,
+        upcomingReleaseDate ?: "",
         IMAGE_BASE_URL + backdrop_path,
         overview,
         genreList = genre_ids

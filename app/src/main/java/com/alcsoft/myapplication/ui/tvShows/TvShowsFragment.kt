@@ -43,10 +43,11 @@ class TvShowsFragment : Fragment() {
         tvShowsViewModel.tvShowsResponse.observe(viewLifecycleOwner, Observer {
             tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
             tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
+            TvShowsAdapter(tvShowsList).notifyDataSetChanged()
         })
     }
 
-    fun chipClicked(genre: GenreDetail) {
+    fun filterTvShowsByGenre(genre: GenreDetail) {
         tvShowsList.clear()
 
         tvShowsGenre.visibility = View.GONE
@@ -72,6 +73,16 @@ class TvShowsFragment : Fragment() {
             messageDialogTextView.text = "Cannot find any tv shows for ${genre.name} type"
             messageDialogTextView.visibility = View.VISIBLE
         }
+    }
+
+    fun showTvShowsList(){
+        tvShowsList.clear()
+
+        val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
+        tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
+
+        tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
+        TvShowsAdapter(tvShowsList).notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

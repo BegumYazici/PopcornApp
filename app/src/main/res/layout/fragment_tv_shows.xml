@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+   <data>
+      <variable
+          name="tvShowsViewModel"
+          type="com.alcsoft.myapplication.ui.tvShows.TvShowsViewModel" />
+   </data>
    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="match_parent"
@@ -46,7 +52,13 @@
              app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
              app:spanCount="3"
              android:padding="6dp"/>
-      </LinearLayout>
 
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:id="@+id/status_image"
+             android:layout_gravity="center" />
+
+      </LinearLayout>
    </FrameLayout>
 </layout>

@@ -5,8 +5,7 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.alcsoft.myapplication.R
-import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.MoviesApiStatus
-import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieApiStatus
+import com.alcsoft.myapplication.ui.movies.adapter.ApiStatus
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -26,36 +25,18 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("popularMovieStatus")
-fun bindStatusPopularMovie(statusImageView: ImageView, movieStatus: MoviesApiStatus?) {
+@BindingAdapter("movieStatus")
+fun bindStatusMovie(statusImageView: ImageView, movieStatus: ApiStatus?) {
     when (movieStatus) {
-        MoviesApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-
-        }
-        MoviesApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        MoviesApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
-}
-
-@BindingAdapter("upcomingMovieStatus")
-fun bindStatusUpcoming(statusImageView: ImageView, movieStatus: UpcomingMovieApiStatus?) {
-    when (movieStatus) {
-        UpcomingMovieApiStatus.LOADING -> {
+        ApiStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
         }
-        UpcomingMovieApiStatus.ERROR -> {
+        ApiStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
-        UpcomingMovieApiStatus.DONE -> {
+        ApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
     }

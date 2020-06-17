@@ -4,7 +4,7 @@
 
         <variable
             name="upcomingMovieViewModel"
-            type="com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieViewModel" />
+            type="com.alcsoft.myapplication.ui.movies.adapter.MovieViewModel" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/status_image"
             android:layout_gravity="center"
-            app:upcomingMovieStatus="@{upcomingMovieViewModel.status}"/>
+            app:movieStatus="@{upcomingMovieViewModel.status}"/>
 
     </LinearLayout>
 </layout>

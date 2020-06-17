@@ -1,6 +1,7 @@
 package com.alcsoft.myapplication.ui.detailMovie
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ class DetailPopularMovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.i("detail","onCreate")
 
         movieName = arguments?.getString("popularMovieName").toString()
         movieDetail = arguments?.getString("popularMovieDetail").toString()
@@ -51,6 +54,8 @@ class DetailPopularMovieFragment : Fragment() {
             backdropPathImage,
             null
         )
+
+        Log.i("detail","onCreateView")
 
         return detailMovieBinding.root
     }
