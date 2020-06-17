@@ -21,6 +21,7 @@ import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieLi
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
+import com.alcsoft.myapplication.ui.util.toInvisible
 import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -91,8 +92,8 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         var isPopularMoviesSelectedByGenreEmpty = false
         var isUpcomingMoviesSelectedByGenreEmpty = false
 
-        imageFindNotMovies.visibility = View.GONE
-        messageDialogTextView.visibility = View.GONE
+        imageFindNotMovies.toInvisible()
+        messageDialogTextView.toInvisible()
 
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
         popularMovieResponse?.let {
@@ -141,18 +142,17 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         movieAdapter.notifyDataSetChanged()
 
         if (isPopularMoviesSelectedByGenreEmpty && isUpcomingMoviesSelectedByGenreEmpty) {
-            imageFindNotMovies.visibility = View.VISIBLE
+            imageFindNotMovies.toVisible()
             messageDialogTextView.text = "Cannot find any movies for ${genre.name} type"
-            messageDialogTextView.visibility = View.VISIBLE
+            messageDialogTextView.toVisible()
         }
     }
 
     fun showMoviesList() {
         moviesList.clear()
 
-        imageFindNotMovies.visibility = View.GONE
-        messageDialogTextView.visibility = View.GONE
-        messageDialogTextView.toVisible()
+        imageFindNotMovies.toInvisible()
+        messageDialogTextView.toInvisible()
 
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
         popularMovieList = popularMovieResponse!!
