@@ -14,7 +14,7 @@ import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.toTvShowModel
 import com.alcsoft.myapplication.ui.tvShows.adapter.TvShowsAdapter
 import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
-import com.alcsoft.myapplication.ui.util.toInvisible
+import com.alcsoft.myapplication.ui.util.toGone
 import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_tv_shows.*
 
@@ -52,9 +52,9 @@ class TvShowsFragment : Fragment() {
     fun filterTvShowsByGenre(genre: GenreDetail) {
         tvShowsList.clear()
 
-        tvShowsGenre.toInvisible()
-        imageFindNotMovies.toInvisible()
-        messageDialogTextView.toInvisible()
+        tvShowsGenre.toGone()
+        imageFindNotMovies.toGone()
+        messageDialogTextView.toGone()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
         tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
@@ -80,9 +80,9 @@ class TvShowsFragment : Fragment() {
     fun showTvShowsList() {
         tvShowsList.clear()
 
-        tvShowsGenre.toInvisible()
-        imageFindNotMovies.toInvisible()
-        messageDialogTextView.toInvisible()
+        tvShowsGenre.toGone()
+        imageFindNotMovies.toGone()
+        messageDialogTextView.toGone()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
         tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>

@@ -9,6 +9,9 @@
     <string name="movies">Movies</string>
     <string name="tv_shows">Tv Shows</string>
     <string name="overview">Overview</string>
+    <string name="ok">ok</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
 
     <array name="tabs">
         <item>Movies</item>

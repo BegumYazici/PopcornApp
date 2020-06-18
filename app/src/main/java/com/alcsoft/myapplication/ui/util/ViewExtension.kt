@@ -6,6 +6,6 @@ fun View.toVisible(){
     visibility = View.VISIBLE
 }
 
-fun View.toInvisible(){
+fun View.toGone(){
     visibility = View.GONE
 }

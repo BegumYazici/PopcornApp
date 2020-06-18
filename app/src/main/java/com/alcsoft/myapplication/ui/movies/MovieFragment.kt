@@ -21,7 +21,7 @@ import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieLi
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
-import com.alcsoft.myapplication.ui.util.toInvisible
+import com.alcsoft.myapplication.ui.util.toGone
 import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -92,8 +92,8 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         var isPopularMoviesSelectedByGenreEmpty = false
         var isUpcomingMoviesSelectedByGenreEmpty = false
 
-        imageFindNotMovies.toInvisible()
-        messageDialogTextView.toInvisible()
+        imageFindNotMovies.toGone()
+        messageDialogTextView.toGone()
 
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
         popularMovieResponse?.let {
@@ -151,8 +151,8 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
     fun showMoviesList() {
         moviesList.clear()
 
-        imageFindNotMovies.toInvisible()
-        messageDialogTextView.toInvisible()
+        imageFindNotMovies.toGone()
+        messageDialogTextView.toGone()
 
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
         popularMovieList = popularMovieResponse!!
