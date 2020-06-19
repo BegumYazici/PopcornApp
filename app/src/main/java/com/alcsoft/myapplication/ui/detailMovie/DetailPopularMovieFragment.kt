@@ -24,10 +24,10 @@ class DetailPopularMovieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.i("detail","onCreate")
+        Log.i("detail", "onCreate")
 
         movieName = arguments?.getString("popularMovieName").toString()
-        movieDetail = arguments?.getString("popularMovieDetail").toString()
+        movieDetail = arguments?.getString(KEY_MOVIE_DETAIL).toString()
         movieReleaseDate = arguments?.getString("date").toString()
         movieImage = arguments?.getString("movieImage").toString()
         backdropPathImage = arguments?.getString("backdropPathImage").toString()
@@ -55,7 +55,7 @@ class DetailPopularMovieFragment : Fragment() {
             null
         )
 
-        Log.i("detail","onCreateView")
+        Log.i("detail", "onCreateView")
 
         return detailMovieBinding.root
     }
@@ -64,9 +64,30 @@ class DetailPopularMovieFragment : Fragment() {
         super.onDestroyView()
         detailMovieBinding.unbind()
     }
-}
 
-/*  root.popular_movie_name.text = movieName
-       root.popular_movie_overview.text = movieDetail
-       root.popular_movie_release_date.text = movieReleaseDate
-       root.popular_movie_image.setImageResource() */
+    companion object {
+
+        private const val KEY_MOVIE_DETAIL = "popularMovieDetail"
+        private const val KEY_POPULAR_MOVIE_NAME = "popularMovieName"
+        private const val KEY_DATE = "date"
+        private const val KEY_MOVIE_IMAGE = "movieImage"
+        private const val KEY_BACKDROP_IMAGE_PATH = "backdropPathImage"
+
+        fun newInstance(popularMovieModel: PopularMovieModel): DetailPopularMovieFragment {
+
+            val detailPopularMovieFragment = DetailPopularMovieFragment()
+            val bundle = Bundle()
+
+            with(popularMovieModel) {
+                bundle.putString(KEY_MOVIE_DETAIL, popularMovieDetail)
+                bundle.putString(KEY_POPULAR_MOVIE_NAME, movieName)
+                bundle.putString(KEY_DATE, releaseDate)
+                bundle.putString(KEY_MOVIE_IMAGE, movieImage)
+                bundle.putString(KEY_BACKDROP_IMAGE_PATH, backdropPath)
+            }
+            detailPopularMovieFragment.arguments = bundle
+
+            return detailPopularMovieFragment
+        }
+    }
+}

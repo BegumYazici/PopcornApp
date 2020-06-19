@@ -33,10 +33,7 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
 
-        val detailUpcomingMovieFragment = DetailUpcomingMovieFragment()
-
         homeFragment.detailClickListener = object : DetailClickListener {
-
             override fun popularMovieClickListener(popularMovieModel: PopularMovieModel) {
                 val detailPopularMovieFragment =
                     DetailPopularMovieFragment.newInstance(popularMovieModel)
@@ -47,16 +44,9 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             }
 
-
             override fun upComingClickListener(upcomingMovieModel: UpcomingMovieModel) {
-                val bundle = Bundle()
-                bundle.putString("upcomingMovieName", upcomingMovieModel.upcomingMovieName)
-                bundle.putString("upcomingMovieImage", upcomingMovieModel.upcomingMovieImage)
-                bundle.putString("upcomingMovieBackDropImage", upcomingMovieModel.backdropPath)
-                bundle.putString("releaseDate", upcomingMovieModel.upcomingMovieDate)
-                bundle.putString("overview", upcomingMovieModel.upcomingMovieOverview)
-
-                detailUpcomingMovieFragment.arguments = bundle
+                val detailUpcomingMovieFragment =
+                    DetailUpcomingMovieFragment.newInstance(upcomingMovieModel)
 
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_view, detailUpcomingMovieFragment)
@@ -87,9 +77,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             connectivityManager.activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
         }
-
-        /*   val activeNetworkInfo = connectivityManager.activeNetworkInfo
-             return activeNetworkInfo != null && activeNetworkInfo.isConnected  */
     }
 
     override fun onBackPressed() {

@@ -3,7 +3,6 @@ package com.alcsoft.myapplication.ui.movies.adapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.UpComingMovieDetail
 import com.alcsoft.myapplication.network.model.toPopularMovieModel
 import com.alcsoft.myapplication.network.service.MovieApi
@@ -72,18 +71,6 @@ class MovieViewModel : ViewModel(){
                 _status.value = ApiStatus.ERROR
             }
         }
-    }
-
-    fun filterMoviesByGenre2(genre: GenreDetail) : List<PopularMovieModel>?{
-
-        var popularMoviesList = popularMovieResponse.value
-
-        val filteredPopularMovieList =
-            popularMoviesList!!.filter { it.genreList?.contains(genre.id) ?: false }
-
-        popularMoviesList = filteredPopularMovieList
-
-        return popularMoviesList
     }
 
     override fun onCleared() {

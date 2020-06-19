@@ -56,8 +56,12 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         moviesList.clear()
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
-        movieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
+        popularMovieResponseObserve()
+        upcomingMovieResponseObserve()
+    }
 
+    private fun popularMovieResponseObserve() {
+        movieViewModel.popularMovieResponse.observe(viewLifecycleOwner, Observer {
             popularMovieList = it
 
             if (genre != null) {
@@ -68,7 +72,9 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
             }
             moviesList.size
         })
+    }
 
+    private fun upcomingMovieResponseObserve() {
         movieViewModel.upcomingMovieResponse.observe(viewLifecycleOwner, Observer {
             upComingMovieList = mutableListOf()
             for (i in it) {
@@ -92,30 +98,41 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         var isPopularMoviesSelectedByGenreEmpty = false
         var isUpcomingMoviesSelectedByGenreEmpty = false
 
+        isPopularMoviesSelectedByGenreEmpty =
+            filterPopularMoviesByGenre(genre, isPopularMoviesSelectedByGenreEmpty)
+
+        isUpcomingMoviesSelectedByGenreEmpty =
+            filterUpcomingMoviesByGenre(genre, isUpcomingMoviesSelectedByGenreEmpty)
+
+        movieAdapter.notifyDataSetChanged()
+
+        isFilteredMoviesEmpty(
+            isPopularMoviesSelectedByGenreEmpty,
+            isUpcomingMoviesSelectedByGenreEmpty,
+            genre
+        )
+    }
+
+    private fun isFilteredMoviesEmpty(
+        isPopularMoviesSelectedByGenreEmpty: Boolean,
+        isUpcomingMoviesSelectedByGenreEmpty: Boolean,
+        genre: GenreDetail
+    ) {
         imageFindNotMovies.toGone()
         messageDialogTextView.toGone()
 
-        val popularMovieResponse = movieViewModel.popularMovieResponse.value
-        popularMovieResponse?.let {
-            popularMovieList = popularMovieResponse
+        if (isPopularMoviesSelectedByGenreEmpty && isUpcomingMoviesSelectedByGenreEmpty) {
+            imageFindNotMovies.toVisible()
+            messageDialogTextView.text = "Cannot find any movies for ${genre.name} type"
+            messageDialogTextView.toVisible()
         }
+    }
 
-        val filteredPopularMovieList =
-            popularMovieList.filter { it.genreList?.contains(genre.id) ?: false }
-
-        popularMovieList = filteredPopularMovieList
-
-        if (popularMovieList.isNotEmpty()) {
-            moviesList.add(
-                MoviesModel.PopularMoviesModel(
-                    "Popular-${genre.name}",
-                    popularMovieList
-                )
-            )
-        } else {
-            isPopularMoviesSelectedByGenreEmpty = true
-        }
-
+    private fun filterUpcomingMoviesByGenre(
+        genre: GenreDetail,
+        isUpcomingMoviesSelectedByGenreEmpty: Boolean
+    ): Boolean {
+        var isUpcomingMoviesSelectedByGenreEmpty1 = isUpcomingMoviesSelectedByGenreEmpty
         val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
         upComingMovieList = mutableListOf<UpcomingMovieModel>()
 
@@ -137,15 +154,37 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
                 MoviesModel.UpcomingMoviesModel("Upcoming-${genre.name}", upComingMovieList)
             )
         } else {
-            isUpcomingMoviesSelectedByGenreEmpty = true
+            isUpcomingMoviesSelectedByGenreEmpty1 = true
         }
-        movieAdapter.notifyDataSetChanged()
+        return isUpcomingMoviesSelectedByGenreEmpty1
+    }
 
-        if (isPopularMoviesSelectedByGenreEmpty && isUpcomingMoviesSelectedByGenreEmpty) {
-            imageFindNotMovies.toVisible()
-            messageDialogTextView.text = "Cannot find any movies for ${genre.name} type"
-            messageDialogTextView.toVisible()
+    private fun filterPopularMoviesByGenre(
+        genre: GenreDetail,
+        isPopularMoviesSelectedByGenreEmpty: Boolean
+    ): Boolean {
+        var isPopularMoviesSelectedByGenreEmpty1 = isPopularMoviesSelectedByGenreEmpty
+        val popularMovieResponse = movieViewModel.popularMovieResponse.value
+        popularMovieResponse?.let {
+            popularMovieList = popularMovieResponse
         }
+
+        val filteredPopularMovieList =
+            popularMovieList.filter { it.genreList?.contains(genre.id) ?: false }
+
+        popularMovieList = filteredPopularMovieList
+
+        if (popularMovieList.isNotEmpty()) {
+            moviesList.add(
+                MoviesModel.PopularMoviesModel(
+                    "Popular-${genre.name}",
+                    popularMovieList
+                )
+            )
+        } else {
+            isPopularMoviesSelectedByGenreEmpty1 = true
+        }
+        return isPopularMoviesSelectedByGenreEmpty1
     }
 
     fun showMoviesList() {
@@ -154,20 +193,27 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         imageFindNotMovies.toGone()
         messageDialogTextView.toGone()
 
+        showPopularMoviesList()
+        showUpcomingMoviesList()
+
+        movieAdapter.notifyDataSetChanged()
+    }
+
+    private fun showPopularMoviesList() {
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
         popularMovieList = popularMovieResponse!!
 
         moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+    }
 
+    private fun showUpcomingMoviesList() {
         val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
 
         upComingMovieList = mutableListOf<UpcomingMovieModel>()
         for (i in upComingMovieDetailList!!) {
             (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
         }
-
         moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
-        movieAdapter.notifyDataSetChanged()
     }
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
