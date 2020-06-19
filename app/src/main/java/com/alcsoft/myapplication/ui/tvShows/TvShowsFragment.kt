@@ -41,7 +41,10 @@ class TvShowsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         tvShowsList.clear()
+        tvShowResponseObserve()
+    }
 
+    private fun tvShowResponseObserve() {
         tvShowsViewModel.tvShowsResponse.observe(viewLifecycleOwner, Observer {
             tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
             tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
@@ -52,9 +55,7 @@ class TvShowsFragment : Fragment() {
     fun filterTvShowsByGenre(genre: GenreDetail) {
         tvShowsList.clear()
 
-        tvShowsGenre.toGone()
-        imageFindNotMovies.toGone()
-        messageDialogTextView.toGone()
+        hideTypeOfFilterTvShowMessage()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
         tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
@@ -62,7 +63,6 @@ class TvShowsFragment : Fragment() {
         val filteredTvShowsList = tvShowsList.filter {
             it.genre_ids.contains(genre.id)
         }
-
         tvShowsList = filteredTvShowsList as MutableList<TvShowModel>
 
         if (tvShowsList.isNotEmpty()) {
@@ -71,24 +71,32 @@ class TvShowsFragment : Fragment() {
             tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
             TvShowsAdapter(tvShowsList).notifyDataSetChanged()
         } else {
-            imageFindNotMovies.toVisible()
-            messageDialogTextView.text = "Cannot find any tv shows for ${genre.name} type"
-            messageDialogTextView.toVisible()
+            showTypeOfFilterTvShowMessage(genre)
         }
+    }
+
+    private fun showTypeOfFilterTvShowMessage(genre: GenreDetail) {
+        imageFindNotMovies.toVisible()
+        messageDialogTextView.text = "Cannot find any tv shows for ${genre.name} type"
+        messageDialogTextView.toVisible()
     }
 
     fun showTvShowsList() {
         tvShowsList.clear()
 
-        tvShowsGenre.toGone()
-        imageFindNotMovies.toGone()
-        messageDialogTextView.toGone()
+        hideTypeOfFilterTvShowMessage()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
         tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
 
         tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
         TvShowsAdapter(tvShowsList).notifyDataSetChanged()
+    }
+
+    private fun hideTypeOfFilterTvShowMessage() {
+        tvShowsGenre.toGone()
+        imageFindNotMovies.toGone()
+        messageDialogTextView.toGone()
     }
 
     override fun onDestroyView() {
