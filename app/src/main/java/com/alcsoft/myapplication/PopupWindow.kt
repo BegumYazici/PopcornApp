@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.popup_window.*
 
-
+//Reference: https://johncodeos.com/how-to-create-a-popup-window-in-android-using-kotlin/
 class PopupWindow: AppCompatActivity() {
 
     private var popupTitle = ""
