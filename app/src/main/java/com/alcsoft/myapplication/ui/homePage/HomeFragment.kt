@@ -37,20 +37,16 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.genreListResponse.observe(viewLifecycleOwner, Observer {
             addChips(it)
         })
-
         addTabsWithViewPager()
     }
+
 
     private fun addChips(genreList: List<GenreDetail>) {
         for (genre in genreList) {

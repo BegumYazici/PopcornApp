@@ -2,7 +2,7 @@
     <string name="app_name">Movies App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="text_welcome">Hi,welcome to MoviesApp!</string>
+    <string name="text_welcome">Hi, welcome to MoviesApp!</string>
     <string name="popular">POPULAR</string>
     <string name="see_more">See more...</string>
 
@@ -17,27 +17,5 @@
         <item>Movies</item>
         <item>Tv Shows</item>
     </array>
-
-    <string-array name="genreTypes">
-        <item>Action</item>
-        <item>Adventure</item>
-        <item>Animation</item>
-        <item>Comedy</item>
-        <item>Crime</item>
-        <item>Documentary</item>
-        <item>Drama</item>
-        <item>Family</item>
-        <item>Fantasy</item>
-        <item>History</item>
-        <item>Horror</item>
-        <item>Music</item>
-        <item>Mystery</item>
-        <item>Romance</item>
-        <item>Science Fiction</item>
-        <item>Tv Movie</item>
-        <item>Thriller</item>
-        <item>War</item>
-        <item>Western</item>
-    </string-array>
 
 </resources>
