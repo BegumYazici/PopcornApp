@@ -2,7 +2,7 @@
     <string name="app_name">Movies App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="text_search">Hi,what\'s next?</string>
+    <string name="text_welcome">Hi,welcome to MoviesApp!</string>
     <string name="popular">POPULAR</string>
     <string name="see_more">See more...</string>
 
