@@ -1,6 +1,8 @@
 package com.alcsoft.myapplication.ui.homePage
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.service.MovieApi
@@ -14,18 +16,21 @@ class HomeViewModel : ViewModel() {
     private var genreJob = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + genreJob)
 
-    interface GenreLoading {
-        fun onGenresLoaded(genresList: List<GenreDetail>)
+    private val _genreListResponse = MutableLiveData<List<GenreDetail>>()
+    val genreListResponse : LiveData<List<GenreDetail>>
+    get() = _genreListResponse
+
+    init {
+        getGenres()
     }
 
-    fun getGenres(listener: GenreLoading) {
+    private fun getGenres() {
         coroutineScope.launch {
             val movieGenreTypeList = MovieApi.retrofitServiceMovieGenreType.getGenreTypes()
             try {
                 val genreMovieResponse = movieGenreTypeList.await()
                 val genreTypeList = genreMovieResponse.genres
-                //addChips(genreTypeList)
-                listener.onGenresLoaded(genreTypeList)
+                _genreListResponse.value = genreTypeList
             } catch (e: Exception) {
                 Log.e("genreTypes", "Genre Type Error")
             }

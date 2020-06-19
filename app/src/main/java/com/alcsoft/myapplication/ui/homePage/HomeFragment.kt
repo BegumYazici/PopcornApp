@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.network.model.GenreDetail
@@ -44,10 +45,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.getGenres(object : HomeViewModel.GenreLoading {
-            override fun onGenresLoaded(genresList: List<GenreDetail>) {
-                addChips(genresList)
-            }
+        homeViewModel.genreListResponse.observe(viewLifecycleOwner, Observer {
+            addChips(it)
         })
 
         addTabsWithViewPager()
