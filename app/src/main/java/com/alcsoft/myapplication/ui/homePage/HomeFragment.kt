@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.network.model.GenreDetail
-import com.alcsoft.myapplication.network.service.MovieApi
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.MovieFragment
 import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
@@ -18,61 +18,42 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.chips_layout.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private var genreJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + genreJob)
-
+    private lateinit var homeViewModel: HomeViewModel
     var detailClickListener: DetailClickListener? = null
     private lateinit var homePagerAdapter: HomePagerAdapter
     private lateinit var tabLayoutMediator: TabLayoutMediator
 
     private var selectedGenreID: Int? = null
-    private var currentGenreId : Int? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        Log.i("homeFragment", "onCreateonCreate")
-    }
+    private var currentGenreId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        Log.i("homeFragment", "onCreateView")
         return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.i("homeFragment", "onViewCreated")
-        getGenres()
+        homeViewModel.getGenres(object : HomeViewModel.GenreLoading {
+            override fun onGenresLoaded(genresList: List<GenreDetail>) {
+                addChips(genresList)
+            }
+        })
+
         addTabsWithViewPager()
     }
 
-    private fun getGenres() {
-        coroutineScope.launch {
-            val movieGenreTypeList = MovieApi.retrofitServiceMovieGenreType.getGenreTypes()
-            try {
-                val genreMovieResponse = movieGenreTypeList.await()
-                val genreTypeList = genreMovieResponse.genres
-                addChips(genreTypeList)
-            } catch (e: Exception) {
-                Log.e("genreTypes", "Genre Type Error")
-            }
-        }
-    }
-
     private fun addChips(genreList: List<GenreDetail>) {
-
         for (genre in genreList) {
             val chip = Chip(
                 context, null,
