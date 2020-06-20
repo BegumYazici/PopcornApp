@@ -1,10 +1,12 @@
-package com.alcsoft.myapplication
+package com.alcsoft.myapplication.ui.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,10 +15,11 @@ import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
+import com.alcsoft.myapplication.R
 import kotlinx.android.synthetic.main.popup_window.*
 
 //Reference: https://johncodeos.com/how-to-create-a-popup-window-in-android-using-kotlin/
-class PopupWindow: AppCompatActivity() {
+class PopupWindow : AppCompatActivity() {
 
     private var popupTitle = ""
     private var popupText = ""
@@ -30,10 +33,10 @@ class PopupWindow: AppCompatActivity() {
 
         // Get the data
         val bundle = intent.extras
-        popupTitle = bundle?.getString("popuptitle", "Title") ?: ""
-        popupText = bundle?.getString("popuptext", "Text") ?: ""
-        popupButton = bundle?.getString("popupbtn", "Button") ?: ""
-        darkStatusBar = bundle?.getBoolean("darkstatusbar", false) ?: false
+        popupTitle = bundle?.getString(KEY_POPUP_TITLE, "Title") ?: ""
+        popupText = bundle?.getString(KEY_POPUP_TEXT, "Text") ?: ""
+        popupButton = bundle?.getString(KEY_POPUP_BUTTON_TEXT, "Button") ?: ""
+        darkStatusBar = bundle?.getBoolean(KEY_POPUP_DARK_STATUS_BAR, false) ?: false
 
         // Set the data
         popup_window_title.text = popupTitle
@@ -88,7 +91,8 @@ class PopupWindow: AppCompatActivity() {
         if (on) {
             winParams.flags = winParams.flags or WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
         } else {
-            winParams.flags = winParams.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
+            winParams.flags =
+                winParams.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
         }
         win.attributes = winParams
     }
@@ -118,5 +122,27 @@ class PopupWindow: AppCompatActivity() {
             }
         })
         colorAnimation.start()
+    }
+
+    companion object {
+        private const val KEY_POPUP_TITLE = "popuptitle"
+        private const val KEY_POPUP_TEXT = "popuptext"
+        private const val KEY_POPUP_BUTTON_TEXT = "popupbtn"
+        private const val KEY_POPUP_DARK_STATUS_BAR = "darkstatusbar"
+
+        fun showPopup(
+            context: Context,
+            title: String,
+            text: String,
+            buttonText: String,
+            showDarkStatusBar: Boolean = false
+        ) {
+            val intent = Intent(context, PopupWindow::class.java)
+            intent.putExtra(KEY_POPUP_TITLE, title)
+            intent.putExtra(KEY_POPUP_TEXT, text)
+            intent.putExtra(KEY_POPUP_BUTTON_TEXT, buttonText)
+            intent.putExtra(KEY_POPUP_DARK_STATUS_BAR, showDarkStatusBar)
+            context.startActivity(intent)
+        }
     }
 }

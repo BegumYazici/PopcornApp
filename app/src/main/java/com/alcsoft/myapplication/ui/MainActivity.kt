@@ -1,12 +1,10 @@
 package com.alcsoft.myapplication.ui
 
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.alcsoft.myapplication.PopupWindow
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
 import com.alcsoft.myapplication.ui.detailMovie.DetailPopularMovieFragment
@@ -14,6 +12,7 @@ import com.alcsoft.myapplication.ui.detailMovie.DetailUpcomingMovieFragment
 import com.alcsoft.myapplication.ui.homePage.HomeFragment
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
+import com.alcsoft.myapplication.ui.util.PopupWindow
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,12 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNoInternetPopup() {
-        val intent = Intent(this, PopupWindow::class.java)
-        intent.putExtra("popuptitle", "Error")
-        intent.putExtra("popuptext", "Sorry, no internet connection!")
-        intent.putExtra("popupbtn", "OK")
-        intent.putExtra("darkstatusbar", false)
-        startActivity(intent)
+        PopupWindow.showPopup(this, "Error", "Sorry, no internet connection!", "OK", false)
         finish()
     }
 
