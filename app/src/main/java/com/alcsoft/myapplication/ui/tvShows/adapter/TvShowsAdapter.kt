@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.databinding.ItemTvShowBinding
 import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
 
-class TvShowsAdapter(private val tvShowsList: List<TvShowModel>): RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder>() {
+class TvShowsAdapter(var tvShowsList: List<TvShowModel>): RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder>() {
 
     class TvShowViewHolder(private val binding:ItemTvShowBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(tvShowModel: TvShowModel) {
@@ -30,4 +30,6 @@ class TvShowsAdapter(private val tvShowsList: List<TvShowModel>): RecyclerView.A
         val tvShowModel = tvShowsList[position]
         holder.bind(tvShowModel)
     }
+
+
 }

@@ -19,12 +19,14 @@ import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_tv_shows.*
 
 
-class TvShowsFragment : Fragment() {
+class TvShowsFragment(var genre: GenreDetail?) : Fragment() {
 
     private lateinit var tvShowsViewModel: TvShowsViewModel
     private lateinit var tvShowsBinding: FragmentTvShowsBinding
 
     private var tvShowsList = mutableListOf<TvShowModel>()
+
+    private var tvShowsAdapter = TvShowsAdapter(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +35,9 @@ class TvShowsFragment : Fragment() {
         tvShowsViewModel = ViewModelProvider(this).get(TvShowsViewModel::class.java)
         tvShowsBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_tv_shows, container, false)
+
         tvShowsBinding.lifecycleOwner = viewLifecycleOwner
+        tvShowsBinding.tvShowsRecyclerview.adapter = tvShowsAdapter
 
         return tvShowsBinding.root
     }
@@ -46,9 +50,11 @@ class TvShowsFragment : Fragment() {
 
     private fun tvShowResponseObserve() {
         tvShowsViewModel.tvShowsResponse.observe(viewLifecycleOwner, Observer {
-            tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
-            tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
-            TvShowsAdapter(tvShowsList).notifyDataSetChanged()
+            if (genre != null) {
+                filterTvShowsByGenre(genre!!)
+            } else {
+                showTvShowsList()
+            }
         })
     }
 
@@ -68,8 +74,8 @@ class TvShowsFragment : Fragment() {
         if (tvShowsList.isNotEmpty()) {
             tvShowsGenre.text = "${genre.name}"
             tvShowsGenre.visibility = View.VISIBLE
-            tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
-            TvShowsAdapter(tvShowsList).notifyDataSetChanged()
+            tvShowsAdapter.tvShowsList = tvShowsList
+            tvShowsAdapter.notifyDataSetChanged()
         } else {
             showTypeOfFilterTvShowMessage(genre)
         }
@@ -88,9 +94,8 @@ class TvShowsFragment : Fragment() {
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
         tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
-
-        tv_shows_recyclerview.adapter = TvShowsAdapter(tvShowsList)
-        TvShowsAdapter(tvShowsList).notifyDataSetChanged()
+        tvShowsAdapter.tvShowsList = tvShowsList
+        tvShowsAdapter.notifyDataSetChanged()
     }
 
     private fun hideTypeOfFilterTvShowMessage() {

@@ -5,11 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
@@ -27,8 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var homePagerAdapter: HomePagerAdapter
     private lateinit var tabLayoutMediator: TabLayoutMediator
 
-    private var selectedGenreID: Int? = null
-    private var currentGenreId: Int? = null
+    private var selectedGenre: GenreDetail? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +43,24 @@ class HomeFragment : Fragment() {
         homeViewModel.genreListResponse.observe(viewLifecycleOwner, Observer {
             addChips(it)
         })
-        addTabsWithViewPager()
-    }
 
+        addTabsWithViewPager()
+
+        viewPager.post {
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    Log.i("HomeFragment", "onPageSelected $position")
+                    selectedGenre?.let {
+                        onGenreClicked(it)
+                    }
+                    if (selectedGenre == null) {
+                        onGenreClickedRemoved()
+                    }
+                }
+            })
+        }
+    }
 
     private fun addChips(genreList: List<GenreDetail>) {
         for (genre in genreList) {
@@ -58,19 +72,18 @@ class HomeFragment : Fragment() {
             chip.isCheckable = true
             chip.isClickable = true
             chip.isFocusable = true
-            chip.isChecked = genre.id == selectedGenreID
+            chip.isChecked = genre == selectedGenre
 
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    selectedGenreID = genre.id
-                    currentGenreId = genre.id
+                    selectedGenre = genre
+                    homePagerAdapter.onGenreCheckedChanged(selectedGenre)
                     onGenreClicked(genre)
-                    Toast.makeText(context, genre.name + " is clicked.", Toast.LENGTH_SHORT).show()
                 } else {
-                    selectedGenreID = null
-                    Log.i("unChecked", "chip unchecked")
-                    if (currentGenreId == genre.id) {
+                    if (selectedGenre == genre) {
                         onGenreClickedRemoved()
+                        selectedGenre = null
+                        homePagerAdapter.onGenreCheckedChanged(null)
                     }
                 }
             }
@@ -83,9 +96,13 @@ class HomeFragment : Fragment() {
         val currentPosition = viewPager.currentItem
         val currentFragment = childFragmentManager.findFragmentByTag("f$currentPosition")
 
-        when (currentFragment!!.tag) {
-            MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).filterMoviesByGenre(genre)
-            TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).filterTvShowsByGenre(genre)
+        currentFragment?.let {
+            when (it.tag) {
+                MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).filterMoviesByGenre(genre)
+                TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).filterTvShowsByGenre(
+                    genre
+                )
+            }
         }
     }
 
@@ -93,10 +110,12 @@ class HomeFragment : Fragment() {
         val currentPosition = viewPager.currentItem
         val currentFragment = childFragmentManager.findFragmentByTag("f$currentPosition")
 
-        return when (currentFragment!!.tag) {
-            MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).showMoviesList()
-            TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).showTvShowsList()
-            else -> throw IllegalStateException("Undefined position.")
+        currentFragment?.let {
+            when(it.tag){
+                MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).showMoviesList()
+                TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).showTvShowsList()
+                else -> throw IllegalStateException("Undefined position.")
+            }
         }
     }
 

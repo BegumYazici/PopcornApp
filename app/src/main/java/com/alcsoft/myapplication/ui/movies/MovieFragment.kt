@@ -201,19 +201,22 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     private fun showPopularMoviesList() {
         val popularMovieResponse = movieViewModel.popularMovieResponse.value
-        popularMovieList = popularMovieResponse!!
-
-        moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+        popularMovieResponse?.let {
+            popularMovieList = it
+            moviesList.add(MoviesModel.PopularMoviesModel(popularMoviesList = popularMovieList))
+        }
     }
 
     private fun showUpcomingMoviesList() {
         val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
+        upComingMovieList = mutableListOf()
 
-        upComingMovieList = mutableListOf<UpcomingMovieModel>()
-        for (i in upComingMovieDetailList!!) {
-            (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
+        upComingMovieDetailList?.let {
+            for (i in it) {
+                (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
+            }
+            moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
         }
-        moviesList.add(MoviesModel.UpcomingMoviesModel(upcomingMovieList = upComingMovieList))
     }
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
