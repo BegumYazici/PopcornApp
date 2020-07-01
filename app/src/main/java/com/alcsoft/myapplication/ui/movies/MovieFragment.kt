@@ -13,6 +13,7 @@ import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentMoviesBinding
 import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.toUpcomingMovieModel
+import com.alcsoft.myapplication.network.service.MovieApi
 import com.alcsoft.myapplication.ui.moviedetail.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.adapter.MovieAdapter
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
@@ -29,6 +30,7 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     private lateinit var movieBinding: FragmentMoviesBinding
     private lateinit var movieViewModel: MovieViewModel
+    private lateinit var movieViewModelFactory: MovieViewModelFactory
 
     private val moviesList = mutableListOf<MoviesModel>()
     private val movieAdapter = MovieAdapter(moviesList, this, this)
@@ -53,7 +55,13 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         moviesList.clear()
-        movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+
+        movieViewModelFactory = MovieViewModelFactory(
+            MovieApi.retrofitServicePopularMovie,
+            MovieApi.retrofitServiceUpcomingMovie
+        )
+        movieViewModel =
+            ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
 
         popularMovieResponseObserve()
         upcomingMovieResponseObserve()

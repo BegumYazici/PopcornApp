@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alcsoft.myapplication.network.model.UpComingMovieDetail
 import com.alcsoft.myapplication.network.model.toPopularMovieModel
-import com.alcsoft.myapplication.network.service.MovieApi
 import com.alcsoft.myapplication.network.service.PopularMoviesApiService
+import com.alcsoft.myapplication.network.service.UpcomingMovieApiService
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,10 @@ enum class ApiStatus {
     DONE
 }
 
-class MovieViewModel(private val popularMoviesApiService : PopularMoviesApiService) : ViewModel(){
+class MovieViewModel(
+    private val popularMoviesApiService: PopularMoviesApiService,
+    private val upcomingMovieApiService: UpcomingMovieApiService
+) : ViewModel() {
 
     private val _popularMovieResponse = MutableLiveData<List<PopularMovieModel>>()
     val popularMovieResponse: LiveData<List<PopularMovieModel>>
@@ -46,22 +49,19 @@ class MovieViewModel(private val popularMoviesApiService : PopularMoviesApiServi
         coroutineScope.launch {
             val getPopularMovies = popularMoviesApiService.getPopularMovies()
             try {
-                _status.value =
-                    ApiStatus.LOADING
-                val popularMoviesList =getPopularMovies.await()
+                _status.value = ApiStatus.LOADING
+                val popularMoviesList = getPopularMovies.await()
                 _popularMovieResponse.value = popularMoviesList.toPopularMovieModel()
-                _status.value =
-                    ApiStatus.DONE
+                _status.value = ApiStatus.DONE
             } catch (e: Exception) {
-                _status.value =
-                    ApiStatus.ERROR
+                _status.value = ApiStatus.ERROR
             }
         }
     }
 
     private fun getUpcomingMovies() {
         coroutineScope.launch {
-            val getUpcomingMovieList = MovieApi.retrofitServiceUpcomingMovie.getUpcomingMovies()
+            val getUpcomingMovieList = upcomingMovieApiService.getUpcomingMovies()
             try {
                 _status.value =
                     ApiStatus.LOADING
