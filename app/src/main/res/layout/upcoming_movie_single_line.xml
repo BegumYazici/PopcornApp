@@ -4,7 +4,7 @@
 
         <variable
             name="upcomingMovieViewModel"
-            type="com.alcsoft.myapplication.ui.movies.adapter.MovieViewModel" />
+            type="com.alcsoft.myapplication.ui.movies.MovieViewModel" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

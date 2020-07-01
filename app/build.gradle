@@ -30,6 +30,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -74,4 +78,14 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$version_http_logging_interceptor"
 
     implementation "androidx.multidex:multidex:$multidex_version"
+
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.2.0'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.8.47'
+    testImplementation 'org.mockito:mockito-inline:2.8.47'
+
+    testCompile 'com.willowtreeapps.assertk:assertk-jvm:0.21'
 }

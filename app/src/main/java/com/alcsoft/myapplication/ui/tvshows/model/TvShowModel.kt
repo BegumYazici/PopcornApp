@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.tvShows.model
+package com.alcsoft.myapplication.ui.tvshows.model
 
 data class TvShowModel(
     val tvShowImage: String,

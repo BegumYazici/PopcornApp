@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.tvShows
+package com.alcsoft.myapplication.ui.tvshows
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,8 @@ import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentTvShowsBinding
 import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.toTvShowModel
-import com.alcsoft.myapplication.ui.tvShows.adapter.TvShowsAdapter
-import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
+import com.alcsoft.myapplication.ui.tvshows.adapter.TvShowsAdapter
+import com.alcsoft.myapplication.ui.tvshows.model.TvShowModel
 import com.alcsoft.myapplication.ui.util.toGone
 import com.alcsoft.myapplication.ui.util.toVisible
 import kotlinx.android.synthetic.main.fragment_tv_shows.*
@@ -25,7 +25,6 @@ class TvShowsFragment(var genre: GenreDetail?) : Fragment() {
     private lateinit var tvShowsBinding: FragmentTvShowsBinding
 
     private var tvShowsList = mutableListOf<TvShowModel>()
-
     private var tvShowsAdapter = TvShowsAdapter(emptyList())
 
     override fun onCreateView(
@@ -53,31 +52,35 @@ class TvShowsFragment(var genre: GenreDetail?) : Fragment() {
             if (genre != null) {
                 filterTvShowsByGenre(genre!!)
             } else {
-                showTvShowsList()
+                showTvShowListWithoutFilter()
             }
         })
     }
 
     fun filterTvShowsByGenre(genre: GenreDetail) {
+        this.genre =genre
+
         tvShowsList.clear()
 
         hideTypeOfFilterTvShowMessage()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
-        tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
+        tvShowsResponse?.let {
+            tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
 
-        val filteredTvShowsList = tvShowsList.filter {
-            it.genre_ids.contains(genre.id)
-        }
-        tvShowsList = filteredTvShowsList as MutableList<TvShowModel>
+            val filteredTvShowsList = tvShowsList.filter {
+                it.genre_ids.contains(genre.id)
+            }
+            tvShowsList = filteredTvShowsList as MutableList<TvShowModel>
 
-        if (tvShowsList.isNotEmpty()) {
-            tvShowsGenre.text = "${genre.name}"
-            tvShowsGenre.visibility = View.VISIBLE
-            tvShowsAdapter.tvShowsList = tvShowsList
-            tvShowsAdapter.notifyDataSetChanged()
-        } else {
-            showTypeOfFilterTvShowMessage(genre)
+            if (tvShowsList.isNotEmpty()) {
+                tvShowsGenre.text = "${genre.name}"
+                tvShowsGenre.visibility = View.VISIBLE
+                tvShowsAdapter.tvShowsList = tvShowsList
+                tvShowsAdapter.notifyDataSetChanged()
+            } else {
+                showTypeOfFilterTvShowMessage(genre)
+            }
         }
     }
 
@@ -87,7 +90,7 @@ class TvShowsFragment(var genre: GenreDetail?) : Fragment() {
         messageDialogTextView.toVisible()
     }
 
-    fun showTvShowsList() {
+    fun showTvShowListWithoutFilter() {
         tvShowsList.clear()
 
         hideTypeOfFilterTvShowMessage()

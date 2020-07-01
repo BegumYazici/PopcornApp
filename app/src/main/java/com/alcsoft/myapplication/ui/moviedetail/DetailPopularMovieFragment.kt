@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.detailMovie
+package com.alcsoft.myapplication.ui.moviedetail
 
 import android.os.Bundle
 import android.util.Log
@@ -66,7 +66,6 @@ class DetailPopularMovieFragment : Fragment() {
     }
 
     companion object {
-
         private const val KEY_MOVIE_DETAIL = "popularMovieDetail"
         private const val KEY_POPULAR_MOVIE_NAME = "popularMovieName"
         private const val KEY_DATE = "date"

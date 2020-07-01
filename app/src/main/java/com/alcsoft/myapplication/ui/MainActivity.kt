@@ -4,12 +4,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.alcsoft.myapplication.R
-import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
-import com.alcsoft.myapplication.ui.detailMovie.DetailPopularMovieFragment
-import com.alcsoft.myapplication.ui.detailMovie.DetailUpcomingMovieFragment
-import com.alcsoft.myapplication.ui.homePage.HomeFragment
+import com.alcsoft.myapplication.ui.moviedetail.DetailClickListener
+import com.alcsoft.myapplication.ui.moviedetail.DetailPopularMovieFragment
+import com.alcsoft.myapplication.ui.moviedetail.DetailUpcomingMovieFragment
+import com.alcsoft.myapplication.ui.home.HomeFragment
 import com.alcsoft.myapplication.ui.movies.model.PopularMovieModel
 import com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel
 import com.alcsoft.myapplication.ui.util.PopupWindow
@@ -74,6 +75,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        Log.i("MainActivity","onBackPressed")
+
         super.onBackPressed()
     }
 }

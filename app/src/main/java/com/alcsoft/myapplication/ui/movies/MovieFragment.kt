@@ -13,9 +13,8 @@ import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.databinding.FragmentMoviesBinding
 import com.alcsoft.myapplication.network.model.GenreDetail
 import com.alcsoft.myapplication.network.model.toUpcomingMovieModel
-import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
+import com.alcsoft.myapplication.ui.moviedetail.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.adapter.MovieAdapter
-import com.alcsoft.myapplication.ui.movies.adapter.MovieViewModel
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
@@ -187,8 +186,10 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         return isPopularMoviesSelectedByGenreEmpty1
     }
 
-    fun showMoviesList() {
+    fun showMovieListWithoutFilter() {
         moviesList.clear()
+
+        this.genre = null
 
         imageFindNotMovies.toGone()
         messageDialogTextView.toGone()

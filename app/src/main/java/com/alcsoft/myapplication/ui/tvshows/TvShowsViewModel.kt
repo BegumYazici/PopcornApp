@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.tvShows
+package com.alcsoft.myapplication.ui.tvshows
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

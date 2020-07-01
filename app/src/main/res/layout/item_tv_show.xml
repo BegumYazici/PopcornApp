@@ -4,7 +4,7 @@
     <data>
         <variable
             name="tvShowModel"
-            type="com.alcsoft.myapplication.ui.tvShows.model.TvShowModel" />
+            type="com.alcsoft.myapplication.ui.tvshows.model.TvShowModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

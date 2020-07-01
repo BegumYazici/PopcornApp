@@ -1,10 +1,10 @@
-package com.alcsoft.myapplication.ui.tvShows.adapter
+package com.alcsoft.myapplication.ui.tvshows.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.databinding.ItemTvShowBinding
-import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
+import com.alcsoft.myapplication.ui.tvshows.model.TvShowModel
 
 class TvShowsAdapter(var tvShowsList: List<TvShowModel>): RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder>() {
 

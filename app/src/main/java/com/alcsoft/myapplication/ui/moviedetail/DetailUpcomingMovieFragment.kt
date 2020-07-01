@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.detailMovie
+package com.alcsoft.myapplication.ui.moviedetail
 
 import android.os.Bundle
 import android.view.LayoutInflater

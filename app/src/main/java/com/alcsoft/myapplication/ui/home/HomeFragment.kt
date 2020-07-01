@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.homePage
+package com.alcsoft.myapplication.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alcsoft.myapplication.R
 import com.alcsoft.myapplication.network.model.GenreDetail
-import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
+import com.alcsoft.myapplication.ui.moviedetail.DetailClickListener
+import com.alcsoft.myapplication.ui.home.adapter.HomePagerAdapter
 import com.alcsoft.myapplication.ui.movies.MovieFragment
-import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
+import com.alcsoft.myapplication.ui.tvshows.TvShowsFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.chips_layout.*
@@ -112,8 +113,8 @@ class HomeFragment : Fragment() {
 
         currentFragment?.let {
             when(it.tag){
-                MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).showMoviesList()
-                TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).showTvShowsList()
+                MOVIES_FRAGMENT_TAG -> (currentFragment as MovieFragment).showMovieListWithoutFilter()
+                TV_SHOWS_FRAGMENT_TAG -> (currentFragment as TvShowsFragment).showTvShowListWithoutFilter()
                 else -> throw IllegalStateException("Undefined position.")
             }
         }
@@ -125,7 +126,11 @@ class HomeFragment : Fragment() {
             arrayOf(R.drawable.ic_movie_black_24dp, R.drawable.ic_tv_black_24dp)
 
         homePagerAdapter =
-            HomePagerAdapter(childFragmentManager, lifecycle, detailClickListener!!)
+            HomePagerAdapter(
+                childFragmentManager,
+                lifecycle,
+                detailClickListener!!
+            )
 
         tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
             tab.text = tabsText[position]

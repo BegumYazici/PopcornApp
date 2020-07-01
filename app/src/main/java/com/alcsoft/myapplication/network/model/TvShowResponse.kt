@@ -1,6 +1,6 @@
 package com.alcsoft.myapplication.network.model
 
-import com.alcsoft.myapplication.ui.tvShows.model.TvShowModel
+import com.alcsoft.myapplication.ui.tvshows.model.TvShowModel
 
 private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 

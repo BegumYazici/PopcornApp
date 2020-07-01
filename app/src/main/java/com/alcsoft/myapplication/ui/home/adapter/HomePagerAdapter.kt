@@ -1,13 +1,13 @@
-package com.alcsoft.myapplication.ui.homePage
+package com.alcsoft.myapplication.ui.home.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alcsoft.myapplication.network.model.GenreDetail
-import com.alcsoft.myapplication.ui.detailMovie.DetailClickListener
+import com.alcsoft.myapplication.ui.moviedetail.DetailClickListener
 import com.alcsoft.myapplication.ui.movies.MovieFragment
-import com.alcsoft.myapplication.ui.tvShows.TvShowsFragment
+import com.alcsoft.myapplication.ui.tvshows.TvShowsFragment
 
 class HomePagerAdapter(
     fragmentManager: FragmentManager,

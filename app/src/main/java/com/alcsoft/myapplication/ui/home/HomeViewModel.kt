@@ -1,4 +1,4 @@
-package com.alcsoft.myapplication.ui.homePage
+package com.alcsoft.myapplication.ui.home
 
 import android.util.Log
 import androidx.lifecycle.LiveData

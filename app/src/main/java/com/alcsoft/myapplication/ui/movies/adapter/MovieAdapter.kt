@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alcsoft.myapplication.R
-import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieAdapter
-import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieAdapter
 import com.alcsoft.myapplication.ui.movies.adapter.popularMovie.PopularMovieListener
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieAdapter
+import com.alcsoft.myapplication.ui.movies.adapter.upcomingMovie.UpcomingMovieListener
 import com.alcsoft.myapplication.ui.movies.model.MoviesModel
 
 class MovieAdapter(private val moviesList: List<MoviesModel>, private val movieClickListener: PopularMovieListener,

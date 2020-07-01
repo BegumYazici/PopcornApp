@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.alcsoft.myapplication.R
-import com.alcsoft.myapplication.ui.movies.adapter.ApiStatus
+import com.alcsoft.myapplication.ui.movies.ApiStatus
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
