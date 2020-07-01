@@ -79,6 +79,8 @@ dependencies {
 
     implementation "androidx.multidex:multidex:$multidex_version"
 
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_kotlin_coroutines"
+
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.12'
     // Optional -- Robolectric environment
@@ -87,5 +89,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.8.47'
     testImplementation 'org.mockito:mockito-inline:2.8.47'
 
-    testCompile 'com.willowtreeapps.assertk:assertk-jvm:0.21'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+    testImplementation 'com.willowtreeapps.assertk:assertk-jvm:0.21'
 }
