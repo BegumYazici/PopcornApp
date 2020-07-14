@@ -4,7 +4,7 @@
     <data>
         <variable
             name="popularViewModel"
-            type="com.alcsoft.myapplication.ui.movies.MovieViewModel" />
+            type="com.begicim.popcornapp.ui.movies.MovieViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

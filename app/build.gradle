@@ -8,7 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.alcsoft.myapplication"
+        applicationId "com.begicim.popcornapp"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
@@ -92,4 +92,6 @@ dependencies {
     testImplementation "android.arch.core:core-testing:1.1.1"
 
     testImplementation 'com.willowtreeapps.assertk:assertk-jvm:0.21'
+
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }

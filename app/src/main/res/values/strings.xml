@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">Movies App</string>
+    <string name="app_name">Popcorn App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="text_welcome">Hi, welcome to MoviesApp!</string>
+    <string name="home_title">Hi, welcome to PopcornApp!</string>
     <string name="popular">POPULAR</string>
-    <string name="see_more">See more...</string>
 
     <string name="movies">Movies</string>
     <string name="tv_shows">Tv Shows</string>

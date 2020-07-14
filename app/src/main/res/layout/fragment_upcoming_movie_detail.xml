@@ -5,7 +5,7 @@
 
         <variable
             name="upcomingMovieDetail"
-            type="com.alcsoft.myapplication.ui.movies.model.UpcomingMovieModel" />
+            type="com.begicim.popcornapp.ui.movies.model.UpcomingMovieModel" />
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +30,7 @@
                     android:id="@+id/backdrop_image"
                     android:layout_width="400dp"
                     android:layout_height="300dp"
-                    android:src="@drawable/movie"
+                    android:src="@drawable/moviedetail_movieicon"
                     app:imageUrl="@{upcomingMovieDetail.backdropPath}" />
 
                 <ImageView

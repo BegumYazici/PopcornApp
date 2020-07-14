@@ -4,7 +4,7 @@
    <data>
       <variable
           name="tvShowsViewModel"
-          type="com.alcsoft.myapplication.ui.tvshows.TvShowsViewModel" />
+          type="com.begicim.popcornapp.ui.tvshows.TvShowsViewModel" />
    </data>
    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
@@ -23,7 +23,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center"
-             android:src="@drawable/find_not"
+             android:src="@drawable/all_findnoticon"
              android:visibility="gone"
              android:layout_marginTop="30dp"/>
 
