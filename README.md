@@ -18,7 +18,7 @@ A popcorn app developed Kotlin with using MVVM architecture. Popcorn App shows m
 1. Glide for image loading
 2. Kotlin Coroutines for managing background threads with simplified code and reducing needs for callbacks
 
-## Test
+## Tests
 I've tested these cases in my project;
 1. Does popular movies service call when loadMovies() function call? 
 2. Is the status be done when popular movies api service return success?
