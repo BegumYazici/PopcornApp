@@ -64,8 +64,10 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
             MovieApi.retrofitServiceUpcomingMovie,
             coroutineContextDispatcher
         )
-        movieViewModel =
-            ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
+        movieViewModel = ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
+
+        movieViewModel.loadPopularMovies()
+        movieViewModel.loadUpcomingMovies()
 
         popularMovieResponseObserve()
         upcomingMovieResponseObserve()

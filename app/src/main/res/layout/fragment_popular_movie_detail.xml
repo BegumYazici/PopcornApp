@@ -50,31 +50,25 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/upcoming_movie_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@{popularMovieDetail.movieName}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Ad Astra" />
 
-                    <TextView
-                        android:id="@+id/upcoming_movie_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@{popularMovieDetail.movieName}"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:text="Ad Astra" />
-
-                    <TextView
-                        android:id="@+id/upcoming_movie_release_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginStart="5dp"
-                        android:text="@{popularMovieDetail.releaseDate}"
-                        android:textSize="18sp"
-                        tools:text="19.10.2020" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/upcoming_movie_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{popularMovieDetail.releaseDate}"
+                    android:textSize="18sp"
+                    tools:text="19.10.2020" />
 
                 <TextView
                     android:id="@+id/upcoming_movie_overview"
@@ -87,8 +81,6 @@
                     tools:text="The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown." />
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </layout>
-

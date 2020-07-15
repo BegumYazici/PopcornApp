@@ -14,13 +14,13 @@ import retrofit2.http.GET
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 private const val POPULAR_MOVIE_PATH =
-    "moviedetail_movieicon/popular?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
+    "movie/popular?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
 private const val UPCOMING_MOVIE_PATH =
-    "moviedetail_movieicon/upcoming?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
+    "movie/upcoming?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
 private const val TV_SHOWS_PATH =
     "tv/popular?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US&page=1"
 private const val MOVIE_GENRE_TYPE_PATH =
-    "genre/moviedetail_movieicon/list?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US"
+    "genre/movie/list?api_key=e66459e5e9d56f1da13f038dc4b78566&language=en-US"
 
 interface PopularMoviesApiService {
     @GET(POPULAR_MOVIE_PATH)

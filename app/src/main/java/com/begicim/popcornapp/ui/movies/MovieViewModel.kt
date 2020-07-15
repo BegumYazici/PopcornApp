@@ -69,19 +69,13 @@ class MovieViewModel(
             try {
                 _status.postValue(ApiStatus.LOADING)
                 val upcomingMovieList = getUpcomingMovieList.await()
-
-                println(upcomingMovieList)
-
                 val filterUpcomingMovieList = upcomingMovieList.results.filter {
                     (it.getUpComingReleaseData()) > Calendar.getInstance().time
                 }
-
-                println(filterUpcomingMovieList)
-
                 _upcomingMovieResponse.postValue(filterUpcomingMovieList)
                 _status.postValue(ApiStatus.DONE)
             } catch (e: Exception) {
-                _status.value = ApiStatus.ERROR
+                _status.postValue(ApiStatus.ERROR)
             }
         }
     }
