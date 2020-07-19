@@ -26,6 +26,7 @@ I've tested these cases in my project;
 Tmdb api return tv show list but it doesn't filter by the date. When the data fetch, I'll filter by the date and show the screen. I've tested this case.  
 
 ## What could be improved?
+- Fix MovieFragment and TvShowsFragment inadvertent re-creation intermittently
 - Add more unit and ui test
 - Add repository
 - Add Room Database
