@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         val homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_view, homeFragment)
-            .addToBackStack(null)
             .commit()
 
         homeFragment.detailClickListener = object : DetailClickListener {
