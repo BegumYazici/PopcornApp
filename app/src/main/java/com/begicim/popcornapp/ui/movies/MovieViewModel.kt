@@ -41,14 +41,22 @@ class MovieViewModel(
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(coroutineContextDispatcher.io() + viewModelJob)
 
+    private var wasPopularMoviesFetched : Boolean = false
+    private var wasTvShowsMoviesFetched : Boolean = false
+
+
     fun loadPopularMovies() {
-        getPopularMovies()
+        if(!wasPopularMoviesFetched){
+            getPopularMovies()
+        }
     }
 
     fun loadUpcomingMovies() {
-        getUpcomingMovies()
+        if(!wasTvShowsMoviesFetched){
+            getUpcomingMovies()
+        }
     }
-
+    
     private fun getPopularMovies() {
         coroutineScope.launch {
             val getPopularMovies = popularMoviesApiService.getPopularMovies()
@@ -57,6 +65,8 @@ class MovieViewModel(
                 val popularMoviesList = getPopularMovies.await()
                 _popularMovieResponse.postValue( popularMoviesList.toPopularMovieModel())
                 _status.postValue( ApiStatus.DONE)
+
+                wasPopularMoviesFetched = true
             } catch (e: Exception) {
                 _status.postValue(ApiStatus.ERROR)
             }
@@ -74,6 +84,8 @@ class MovieViewModel(
                 }
                 _upcomingMovieResponse.postValue(filterUpcomingMovieList)
                 _status.postValue(ApiStatus.DONE)
+
+                wasTvShowsMoviesFetched = true
             } catch (e: Exception) {
                 _status.postValue(ApiStatus.ERROR)
             }
