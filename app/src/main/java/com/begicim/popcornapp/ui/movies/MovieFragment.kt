@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -149,8 +148,8 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
         val upComingMovieDetailList = movieViewModel.upcomingMovieResponse.value
         upComingMovieList = mutableListOf<UpcomingMovieModel>()
 
-        for (i in upComingMovieDetailList!!) {
-            (upComingMovieList as MutableList<UpcomingMovieModel>).add(i.toUpcomingMovieModel())
+        for (upComingMovieDetail in upComingMovieDetailList!!) {
+            (upComingMovieList as MutableList<UpcomingMovieModel>).add(upComingMovieDetail.toUpcomingMovieModel())
         }
 
         val filteredUpcomingMovieList = mutableListOf<UpcomingMovieModel>()
@@ -236,20 +235,10 @@ class MovieFragment(private var detailClickListener: DetailClickListener?) : Fra
 
     override fun onMovieItemClicked(popularMovieModel: PopularMovieModel) {
         detailClickListener?.popularMovieClickListener(popularMovieModel)
-        Toast.makeText(
-            context,
-            "${popularMovieModel.movieName} is clicked.",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     override fun onUpcomingMovieItemClicked(upcomingMovieModel: UpcomingMovieModel) {
         detailClickListener?.upComingClickListener(upcomingMovieModel)
-        Toast.makeText(
-            context,
-            "${upcomingMovieModel.upcomingMovieName} is clicked.",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     override fun onDestroyView() {

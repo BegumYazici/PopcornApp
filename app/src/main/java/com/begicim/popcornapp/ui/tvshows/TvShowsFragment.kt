@@ -96,9 +96,12 @@ class TvShowsFragment(var genre: GenreDetail?) : Fragment() {
         hideTypeOfFilterTvShowMessage()
 
         val tvShowsResponse = tvShowsViewModel.tvShowsResponse.value
-        tvShowsList = tvShowsResponse!!.toTvShowModel() as MutableList<TvShowModel>
-        tvShowsAdapter.tvShowsList = tvShowsList
-        tvShowsAdapter.notifyDataSetChanged()
+
+        tvShowsResponse?.let {
+            tvShowsList = it.toTvShowModel() as MutableList<TvShowModel>
+            tvShowsAdapter.tvShowsList = tvShowsList
+            tvShowsAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun hideTypeOfFilterTvShowMessage() {
