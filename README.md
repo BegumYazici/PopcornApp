@@ -1,5 +1,5 @@
 # PopcornApp
-The PopcornApp developed using MVVM architecture on Kotlin which fetchs movies and tv shows from TMDB API
+The PopcornApp developed using MVVM architecture on Kotlin which fetches movies and tv shows from TMDB API
 
 ## Libraries Used
 - **Foundation**
